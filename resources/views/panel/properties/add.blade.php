@@ -106,38 +106,15 @@
     let map, marker, geocoder, autocomplete;
 
     $(function () {
-        // Initialize map based on current location
         initializePropertyLocation();
+        initializePropertyLocation1(29.3759, 47.9774, 11);
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    // Successfully obtained the user's location
-                    initializePropertyLocation1(position.coords.latitude, position.coords.longitude, 15);
-                },
-                function (error) {
-                    // Handle geolocation errors
-                    switch(error.code) {
-                        case error.PERMISSION_DENIED:
-                            alert("Geolocation failed: User denied the request for Geolocation.");
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            alert("Geolocation failed: Location information is unavailable.");
-                            break;
-                        case error.TIMEOUT:
-                            alert("Geolocation failed: The request to get user location timed out.");
-                            break;
-                        case error.UNKNOWN_ERROR:
-                            alert("Geolocation failed: An unknown error occurred.");
-                            break;
-                    }
-                    // Optionally provide a default location
-                    initializePropertyLocation1(40.7128, -74.0060, 15); // Default to New York City
-                }
-            );
-        } else {
-            alert("Sorry, your browser does not support geolocation services.");
-        }
+        $('#addModal').on('shown.bs.modal', function () {
+            if (typeof google !== 'undefined' && google.maps && map) {
+                google.maps.event.trigger(map, 'resize');
+                map.setCenter(marker ? marker.getPosition() : new google.maps.LatLng(29.3759, 47.9774));
+            }
+        });
 
         // Listen for country selection change
         $('#country').on('change', function() {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ session('locale', 'en') }}" translate="no" class="notranslate">
 
 @include('panel.includes.head')
 

@@ -131,16 +131,6 @@
             initializePropertyLocation();
             initializePropertyLocation1('{{ $data->latitude }}', '{{ $data->longitude }}', 19);
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    console.log("HEre2");
-                    initializePropertyLocation1('{{ $data->latitude }}', '{{ $data->longitude }}', 19);
-                });
-            } else {
-
-                alert("Sorry, your browser does not support geolocation services.");
-            }
-
             $('#country').on('change', function() {
                 let selectedCountryCode = $(this).val();
                 initializePropertyLocation(selectedCountryCode);

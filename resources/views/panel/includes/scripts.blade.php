@@ -2,7 +2,6 @@
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
 <script src="{{ asset('assets/lib/bootstrapp/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/lib/feather-icons/feather.min.js') }}"></script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script src="{{ asset('assets/lib/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('assets/lib/jquery.flot/jquery.flot.js') }}"></script>
 <script src="{{ asset('assets/lib/jquery.flot/jquery.flot.stack.js') }}"></script>

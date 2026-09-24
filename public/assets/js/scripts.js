@@ -1,15 +1,3 @@
-var googleInstance;
-
-function googleTranslateElementInit() {
-    if (window.googleInstance) {
-        window.googleInstance.destroy(); // Corrected method name
-    }
-    window.googleInstance = new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        includedLanguages: 'ar,en',
-        autoDisplay: true
-    }, 'google_translate_element');
-}
 
 
 function setUnitType(value) {

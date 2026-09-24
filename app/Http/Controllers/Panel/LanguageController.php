@@ -23,9 +23,9 @@ class LanguageController extends Controller
 
     public function update(Request $request)
     {
-        $language = $this->primary_model->find($request->id);
-
-        $language->update($request->only($this->primary_model->getFillable()));
+        $locale = $request->input('locale') === 'ar' ? 'ar' : 'en';
+        $request->session()->put('locale', $locale);
+        app()->setLocale($locale);
 
         flash('Language Changed','success');
 

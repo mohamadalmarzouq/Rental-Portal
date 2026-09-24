@@ -1,5 +1,6 @@
 <head>
     <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
     <title>Real Estate Portal</title>
     <link rel="shortcut icon" href="{{asset('assets/img/favicon.png')}}" type="image/x-icon">
     <link href="{{ asset('assets/lib/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
