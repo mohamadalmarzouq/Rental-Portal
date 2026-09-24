@@ -36,7 +36,7 @@
                 <div class="total_collection">
                     <span
                         class="total_collection_title mg-b-10 d-block">{{ isset($widgets[3]->title) ? $widgets[3]->title : '' }}</span>
-                    <h2 class="m-0 tx-roboto" id="netAmount"><span class="kwd">KWD</span>
+                    <h2 class="m-0 tx-roboto dashboard-card-value" id="netAmount" data-widget-id="{{ isset($widgets[3]->id) ? $widgets[3]->id : '' }}"><span class="kwd">KWD</span>
                         {{ isset($widgets[3]->query[0]->value) ? $widgets[3]->query[0]->value : 0 }}
                     </h2>
                 </div>
@@ -137,27 +137,14 @@
                 'start_date': start_date,
                 'end_date': end_date
             }).done(function(data) {
-                data.forEach(element => {
-                    $("#cardsData h3").each(function(index) {
-                        if (element.id == 23 && index == 0) {
-                            $(this).html('<span class="kwd">KWD</span>' + (element.query[0]
-                                .value ? element.query[0].value : 0))
-                        }
-                        if (element.id == 22 && index == 1) {
-                            $(this).html('<span class="kwd">KWD</span>' + (element.query[0]
-                                .value ? element.query[0].value : 0))
-                        }
-                        if (element.id == 21 && index == 2) {
-                            $(this).html('<span class="kwd">KWD</span>' + (element.query[0]
-                                .value ? element.query[0].value : 0))
-                        }
-                        if (element.id == 31) {
-                            $('.total_collection h2').html('<span class="kwd">KWD</span>' +
-                                (element.query[0].value ? element.query[0].value : 0))
-                        }
-                    });
+                data.forEach(function(element) {
+                    var value = (element.query && element.query[0] && element.query[0].value)
+                        ? element.query[0].value
+                        : 0;
+                    $('.dashboard-card-value[data-widget-id="' + element.id + '"]').html(
+                        '<span class="kwd">KWD</span> ' + value
+                    );
                 });
-
             }).fail(function(error) {
 
             })

@@ -117,12 +117,59 @@ class Widget extends Model
     {
 
         foreach ($widgets as $key => $widget) {
+            if (in_array((int) $widget->id, [21, 22, 23, 28, 31], true)) {
+                $widget->query = $this->collectionCardValue((int) $widget->id);
+                continue;
+            }
             if (isset($widget->query)) {
                 $widget->query = $this->parseWidgetQuery($widget->query);
                 $widget->query = DB::select($widget->query);
             }
         }
         return $widgets;
+    }
+
+    protected function collectionCardValue($widgetId)
+    {
+        $current_user = Auth::user();
+        $request_params = app('request')->all();
+        $property_id = $request_params['property'] ?? null;
+        $start_date = trim($this->startDate('start_date'), "'");
+        $end_date = trim($this->endDate('end_date'), "'");
+
+        $status_ids = Status::where('module', 'invoices')
+            ->whereIn('slug', ['approved', 'paid'])
+            ->pluck('id');
+
+        $revenue_type_id = Type::where('module', 'invoices')->where('slug', 'revenue')->value('id');
+        $expense_type_id = Type::where('module', 'invoices')->where('slug', 'expense')->value('id');
+
+        $base = Invoice::query()
+            ->whereHas('property.assigned_to', function ($q) use ($current_user, $property_id) {
+                $q->where('user_id', $current_user->id);
+                if ($property_id) {
+                    $q->where('property_id', $property_id);
+                }
+            })
+            ->whereIn('invoice_status_id', $status_ids)
+            ->whereBetween('end_date', [$start_date, $end_date]);
+
+        if ($widgetId === 31) {
+            $revenue = (clone $base)->where('type_id', $revenue_type_id)->sum('total_amount');
+            $expense = (clone $base)->where('type_id', $expense_type_id)->sum('total_amount');
+            return [(object) ['value' => $revenue - $expense]];
+        }
+
+        $query = (clone $base)->where('type_id', $revenue_type_id);
+
+        $method_slug = [22 => 'online', 23 => 'offline', 28 => 'kiosk'][$widgetId] ?? null;
+        if ($method_slug) {
+            $query->whereHas('payment_method', function ($q) use ($method_slug) {
+                $q->where('slug', $method_slug)->where('module', 'invoices');
+            });
+        }
+
+        return [(object) ['value' => $query->sum('total_amount') ?: 0]];
     }
 
     public function parseWidgetQuery($query)

@@ -47,16 +47,12 @@ class PanelController extends Controller
     }
 
     public function dateFilter(){
-        $dashCards = [];
         $current_user = auth()->user();
-        $widgets = $this->primary_model->getWidgets($current_user);
-        $this->dataAssign['widgets'] = $this->primary_model->getQueryResult($widgets);
-        foreach($this->dataAssign['widgets'] as $key => $value){
-            if($key <= 3){
-                array_push($dashCards, $value);
-            }
-        }
-        return $dashCards;
+        $widgets = $this->primary_model->getQueryResult($this->primary_model->getWidgets($current_user));
+
+        return collect($widgets)->filter(function ($widget) {
+            return in_array((int) $widget->id, [21, 22, 23, 28, 31], true);
+        })->values();
     }
     public function dateFilter2(){
         return response()->json(['error' => true],403);

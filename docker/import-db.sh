@@ -21,4 +21,7 @@ fi
 
 echo "Ensuring known test logins..."
 "${mysql_cmd[@]}" < /var/www/html/docker/mysql-init/03-ensure-test-users.sql
+
+echo "Updating dashboard collection widget queries..."
+"${mysql_cmd[@]}" < /var/www/html/docker/mysql-init/04-fix-dashboard-widgets.sql
 unset MYSQL_PWD

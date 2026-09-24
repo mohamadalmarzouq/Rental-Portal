@@ -111,9 +111,9 @@
                     @endforeach
                  @else --}}
                             @php
-                                $invoice_total = $data->invoice_extras->sum('amount');
+                                $invoice_total = $data->total_amount;
                                 if (!$invoice_total) {
-                                    $invoice_total = $data->total_amount;
+                                    $invoice_total = $data->invoice_extras->sum('amount');
                                 }
                             @endphp
                             <tr>
