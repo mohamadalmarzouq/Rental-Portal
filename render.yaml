@@ -6,7 +6,7 @@ services:
     name: rental-portal
     runtime: docker
     plan: starter
-    healthCheckPath: /login
+    healthCheckPath: /healthz.html
     disk:
       name: rental-storage
       mountPath: /var/www/html/storage

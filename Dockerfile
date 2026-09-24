@@ -42,8 +42,7 @@ WORKDIR /var/www/html
 
 COPY . /var/www/html
 
-RUN composer install --no-interaction --prefer-dist --no-dev --no-scripts --no-ansi \
-    && composer dump-autoload --optimize --no-dev --no-ansi
+RUN composer install --no-interaction --prefer-dist --no-dev --no-scripts --no-ansi
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["apache2-foreground"]

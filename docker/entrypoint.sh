@@ -29,7 +29,7 @@ if [ -z "${APP_KEY:-}" ] || [ "${APP_KEY}" = "" ]; then
     if [ -f storage/app/APP_KEY ]; then
         export APP_KEY="$(cat storage/app/APP_KEY)"
     else
-        generated="$(php artisan key:generate --show)"
+        generated="base64:$(php -r 'echo base64_encode(random_bytes(32));')"
         echo "$generated" > storage/app/APP_KEY
         export APP_KEY="$generated"
     fi

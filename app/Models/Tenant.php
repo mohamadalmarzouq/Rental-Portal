@@ -50,21 +50,17 @@ class Tenant extends Model
     {
         parent::boot();
 
-        $unit_model = new Unit();
+        static::deleting(function ($tenant) {
+            $unit_model = new Unit();
+            $status_model = new Status();
+            $unit_status_id = $status_model->getStatusID('units', 'active');
 
-        $status_model = new Status();
-
-        $unit_status_id = $status_model->getStatusID('units', 'active');
-
-        static::deleting(function ($tenant) use ($unit_status_id, $unit_model) {
             foreach ($tenant->invoices as $invoice) {
                 $invoice->delete();
             }
 
             foreach ($tenant->leases as $lease) {
-
                 $unit_model->changeUnitStatus($lease->unit_id, $unit_status_id);
-
                 $lease->delete();
             }
         });
