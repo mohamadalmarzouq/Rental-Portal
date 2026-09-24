@@ -13,8 +13,9 @@ class InvoiceExtra extends Model
     public function attachItems($extra, $invoice_id)
     {
 
-        $total_amount   =   str_replace(",", "", $extra['total_amount']) ?? 0;
+        $total_amount   =   str_replace(",", "", $extra['total_amount'] ?? 0);
         $total_amount   =   intval($total_amount);
+        $waive_amount   =   isset($extra['waive_amount']) ? str_replace(",", "", $extra['waive_amount']) : null;
 
         $this->create(
             [
@@ -24,7 +25,7 @@ class InvoiceExtra extends Model
                 'unit_id' => $extra['unit_id'] ?? null,
                 'property_id' => $extra['property_id'] ?? null,
                 'amount' => $total_amount ?? null,
-                'waive_amount' => $extra['waive_amount'] ?? null,
+                'waive_amount' => $waive_amount !== '' ? $waive_amount : null,
                 'invoice_id' => $invoice_id,
             ]
         );

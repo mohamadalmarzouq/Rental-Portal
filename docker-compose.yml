@@ -1,0 +1,42 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: real_estate
+      DB_USERNAME: rental
+      DB_PASSWORD: rental
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: real_estate
+      MYSQL_USER: rental
+      MYSQL_PASSWORD: rental
+      MYSQL_ROOT_PASSWORD: rentalroot
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./SQLBackups/07-05-2020.sql:/docker-entrypoint-initdb.d/01-dump.sql:ro
+      - ./docker/mysql-init/02-schema-patch.sql:/docker-entrypoint-initdb.d/02-schema-patch.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-urental", "-prental"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+volumes:
+  mysql_data:

@@ -54,12 +54,10 @@ class UserController extends Controller
 
     public function store(StoreUser $storeUser)
     {
-        // dd("hello",$user);
-        $unique_password = uniqid();
-        $password = Hash::make($unique_password);
-        $storeUser->merge(['password' => $password]);
+        $plain_password = $storeUser->password;
+        $storeUser->merge(['password' => Hash::make($plain_password)]);
         $user = $this->primary_model->create($storeUser->only($this->primary_model->getFillable()));
-        $user->unique_password = $unique_password;
+        $user->unique_password = $plain_password;
         event(new Registered($user));
         event(new VerificationMail($user));
         event(new LandLordSignUp($user));

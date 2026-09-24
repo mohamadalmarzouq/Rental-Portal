@@ -110,9 +110,15 @@
                     </tr>
                     @endforeach
                  @else --}}
+                            @php
+                                $invoice_total = $data->invoice_extras->sum('amount');
+                                if (!$invoice_total) {
+                                    $invoice_total = $data->total_amount;
+                                }
+                            @endphp
                             <tr>
                                 <td>{{ date('M', strtotime($data->created_at)) }}</td>
-                                <td class="text-right">{{ number_format($data->total_amount) }}</td>
+                                <td class="text-right">{{ number_format($invoice_total) }}</td>
                             </tr>
                             {{-- @endif --}}
                         </tbody>
@@ -120,7 +126,7 @@
                     <div class="col">
                         <div class="border-top pt-3 d-flex justify-content-between">
                             <strong>Total</strong>
-                            <div class="px-3 py-1 rounded-sm bg-light">{{ addCommaForNumeric($data->total_amount) }}</div>
+                            <div class="px-3 py-1 rounded-sm bg-light">{{ addCommaForNumeric($invoice_total) }}</div>
                         </div>
                     </div>
                 </div>

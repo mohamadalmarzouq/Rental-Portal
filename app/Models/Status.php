@@ -38,6 +38,8 @@ class Status extends Model
 
     public function getStatusID($module, $slug)
     {
-        return $this->where('module', $module)->where('slug', $slug)->first()->id;
+        $status = $this->where('module', $module)->where('slug', $slug)->first();
+
+        return $status ? $status->id : null;
     }
 }

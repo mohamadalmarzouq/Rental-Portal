@@ -1,0 +1,102 @@
+# Blueprint: website + MySQL + overdue cron.
+# In Render: New + Blueprint, pick this GitHub repo.
+
+services:
+  - type: web
+    name: rental-portal
+    runtime: docker
+    plan: starter
+    healthCheckPath: /login
+    disk:
+      name: rental-storage
+      mountPath: /var/www/html/storage
+      sizeGB: 1
+    envVars:
+      - fromGroup: rental-portal-app
+      - key: DB_HOST
+        fromService:
+          name: rental-portal-mysql
+          type: pserv
+          property: host
+      - key: DB_PORT
+        fromService:
+          name: rental-portal-mysql
+          type: pserv
+          property: port
+      - key: DB_PASSWORD
+        fromService:
+          name: rental-portal-mysql
+          type: pserv
+          envVarKey: MYSQL_PASSWORD
+
+  - type: pserv
+    name: rental-portal-mysql
+    runtime: docker
+    dockerfilePath: ./docker/mysql/Dockerfile
+    plan: starter
+    autoDeployTrigger: off
+    disk:
+      name: rental-mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 5
+    envVars:
+      - key: MYSQL_DATABASE
+        value: real_estate
+      - key: MYSQL_USER
+        value: rental
+      - key: MYSQL_PASSWORD
+        generateValue: true
+      - key: MYSQL_ROOT_PASSWORD
+        generateValue: true
+
+  - type: cron
+    name: rental-portal-overdue
+    runtime: docker
+    plan: starter
+    schedule: "0 * * * *"
+    dockerCommand: php artisan overdue:lease
+    envVars:
+      - fromGroup: rental-portal-app
+      - key: DB_HOST
+        fromService:
+          name: rental-portal-mysql
+          type: pserv
+          property: host
+      - key: DB_PORT
+        fromService:
+          name: rental-portal-mysql
+          type: pserv
+          property: port
+      - key: DB_PASSWORD
+        fromService:
+          name: rental-portal-mysql
+          type: pserv
+          envVarKey: MYSQL_PASSWORD
+
+envVarGroups:
+  - name: rental-portal-app
+    envVars:
+      - key: APP_NAME
+        value: RentPortal
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: LOG_CHANNEL
+        value: stack
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_DATABASE
+        value: real_estate
+      - key: DB_USERNAME
+        value: rental
+      - key: CACHE_DRIVER
+        value: file
+      - key: SESSION_DRIVER
+        value: cookie
+      - key: SESSION_LIFETIME
+        value: "120"
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: MAIL_DRIVER
+        value: log

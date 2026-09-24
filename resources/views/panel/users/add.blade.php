@@ -50,6 +50,12 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="" class="mb-1">Password</label>
+                                <input type="text" name="password" id="password" class="form-control" placeholder="Password they will use to sign in">
+                            </div>
+                        </div>
                     </div>
                     <button class="btn btn-primary float-right" type="submit">Submit</button>
                 </form>

@@ -44,17 +44,9 @@
                                 <select onchange="checkResidenceType($(this).val());"
                                         class="custom-select mr-0 font-weight-500"
                                         name="residence_type" id="residence_type">
-
-                                    {{-- <option
-                                        {{ isset($data->residence_type) ? $data->residence_type == 'commercial' ? 'selected' : '' : '' }}
-                                        value="commercial">
-                                        Commercial
-                                    </option>
-                                    <option
-                                        {{ isset($data->residence_type) ? $data->residence_type == 'residential' ? 'selected' : '' : ''}}
-                                        value="residential">
-                                        Residential
-                                    </option> --}}
+                                    <option value="">Select Residence Type</option>
+                                    <option value="commercial">Commercial</option>
+                                    <option value="residential">Residential</option>
                                 </select>
                             </div>
                         </div>
@@ -431,8 +423,13 @@
 
             $.get(requested_url).done(function (data) {
                 $('#unit').html(data);
-                $('#residence_type').html('<option value="">Select Residence Type</option>');
+                $('#residence_type').html(
+                    '<option value="">Select Residence Type</option>' +
+                    '<option value="commercial">Commercial</option>' +
+                    '<option value="residential">Residential</option>'
+                );
                 $("#res_type_status").html('');
+                $('#unit_occupied_error').remove();
                 $('#unit_type').val('');
 
             }).fail(function (error) {

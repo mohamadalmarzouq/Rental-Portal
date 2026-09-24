@@ -28,6 +28,7 @@ class UpdateUser extends FormRequest
             'role_id' => 'required|exists:roles,id',
             'email' => 'required|email|unique:users,email,' . $this->id,
             'user_status_id' => 'required|exists:statuses,id',
+            'password' => 'nullable|min:6',
         ];
     }
 }

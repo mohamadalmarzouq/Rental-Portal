@@ -254,6 +254,7 @@ class InvoiceController extends Controller
 
             $invoice = $this->primary_model->create($storeInvoice->only($this->primary_model->getFillable()));
 
+            $lease = null;
             if ($storeInvoice->has('extras')) {
                 $totalAmount = 0;
                 foreach ($storeInvoice->extras as $key => $extras) {
@@ -268,6 +269,7 @@ class InvoiceController extends Controller
                             ->first();
 
                         if (!$lease) {
+                            DB::rollBack();
                             return response()->json([
                                 'errors' => ['unit_id' => ['No active lease found against this unit.']],
                                 'message' => 'The given data was invalid.'
@@ -281,10 +283,16 @@ class InvoiceController extends Controller
                 }
 
                 $invoice->total_amount = $totalAmount;
-                $invoice->tenant_id = $lease->tenant_id;
-                $invoice->property_id = $lease->property_id;
-                $invoice->unit_id = $lease->unit_id;
-                $invoice->lease_id = $lease->id;
+                if ($lease) {
+                    $invoice->tenant_id = $lease->tenant_id;
+                    $invoice->property_id = $lease->property_id;
+                    $invoice->unit_id = $lease->unit_id;
+                    $invoice->lease_id = $lease->id;
+                } else {
+                    $first_extra = collect($storeInvoice->extras)->first();
+                    $invoice->property_id = $first_extra['property_id'] ?? null;
+                    $invoice->unit_id = $first_extra['unit_id'] ?? null;
+                }
                 $invoice->save();
             }
 
@@ -294,76 +302,10 @@ class InvoiceController extends Controller
                 }
             }
 
-            $month = date('m', strtotime($invoice->start_date));
-
-            $overduePayments = $this->overdue_model
-                ->where('lease_id', $invoice->lease_id)
-                ->whereMonth('date', $month)
-                ->get();
-
-            $invoiceAmount = floatval($invoice->total_amount);
-
-            // Ensure advance_payment is not null (default to 0)
-            $lease->advance_payment = $lease->advance_payment ?? 0;
-
-            // Use Lease's Advance Payment (if available)
-            if ($lease->advance_payment >= $invoiceAmount) {
-                // Fully pay the invoice using advance payment
-                $lease->advance_payment -= $invoiceAmount;
-                $invoiceAmount = 0;
-            } else {
-                // Use all advance payment, remaining amount still unpaid
-                $invoiceAmount -= $lease->advance_payment;
-                $lease->advance_payment = 0;
-            }
-            Log::info("Used lease advance payment. Remaining Advance: {$lease->advance_payment}");
-            $lease->save();
-
-            foreach ($overduePayments as $overdue) {
-                $overdueAmount = floatval(preg_replace('/[^\d.]/', '', $overdue->amount));
-
-                Log::info("Processing Overdue ID: {$overdue->id}, Overdue Amount: {$overdueAmount}, Invoice Amount: {$invoiceAmount}");
-
-                if (!is_numeric($overdueAmount) || !is_numeric($invoiceAmount)) {
-                    Log::error("Non-numeric value found: Overdue ID {$overdue->id}, Overdue Amount: {$overdue->amount}, Invoice Amount: {$invoice->total_amount}");
-                    continue;
-                }
-
-                $newAmount = $overdueAmount - $invoiceAmount;
-
-                if ($newAmount <= 0) {
-                    Log::info("Overdue fully paid. Deleting Overdue ID: {$overdue->id}");
-                    $overdue->delete();
-                    $invoiceAmount = abs($newAmount); // Carry over remaining amount
-                } else {
-                    Log::info("Partial payment. Updating Overdue ID: {$overdue->id} to Amount: {$newAmount}");
-                    $overdue->update(['amount' => $newAmount]);
-                    // $invoiceAmount = 0;
-                    break;
-                }
-
-                Log::info("After processing Overdue ID: {$overdue->id}, Remaining Invoice Amount: {$invoiceAmount}");
-
-                if ($invoiceAmount <= 0) {
-                    break;
-                }
-            }
-
-            // If there is extra payment left, store it as Advance Payment
-            if ($invoiceAmount > 0) {
-                Log::info("Remaining amount after overdue payments: {$invoiceAmount}. Adding to advance payment.");
-                $lease->advance_payment += $invoiceAmount;
-                $lease->save();
-                // $invoiceAmount = 0;
-            }
-
-            // Update the invoice total amount after deductions
-            $invoice->update(['total_amount' => $invoiceAmount]);
-
             $storeInvoice->session()->flash('activity_log_data', [
                 'identifier' => 'invoice_added',
                 'subject_type' => $invoice,
-                'name' => 'name',
+                'name' => 'description',
                 'module' => $this->dataAssign['module'],
                 'method' => __FUNCTION__
             ]);
@@ -372,6 +314,7 @@ class InvoiceController extends Controller
             return redirect($this->dataAssign['module']);
         } catch (Exception $e) {
             DB::rollBack();
+            Log::error($e->getMessage(), ['exception' => $e]);
             return response($e->getMessage(), 500);
         }
     }

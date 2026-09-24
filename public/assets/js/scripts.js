@@ -58,6 +58,12 @@ function formSuccessAction(form_elm, modal_elm, datatable_elm) {
 
 function showErrorMsgs(errs) {
     var response = errs.responseJSON;
+    if (!response || !response.errors) {
+        var form = $('#addForm, #editForm, #commentForm').filter(':visible').first();
+        var message = (response && response.message) ? response.message : 'Something went wrong. Please try again.';
+        form.prepend('<p class="text-danger">' + message + '</p>');
+        return;
+    }
     $.each(response.errors, function (key, value) {
 
         let msg = value[0].replace(" id", "");
@@ -330,28 +336,25 @@ function printDiv(divID) {
 
 function changeUnitType(value){
     let id = value;
-    let property_id = $('#property_id').val();
+
+    if (!id) {
+        return;
+    }
 
             let requested_url = base_url + '/properties-get-residence-units-type/' + id;
-            let response;
             $.get(requested_url).done(function (data) {
-                try {
-                    response = JSON.parse(data);
-                    console.log('Valid JSON:', response);
-                  } catch (e) {
-
-                  }
-                if(response)
-                {
-                    alert(response.error);
-                    $('#unit_id').val('');
+                if (typeof data === 'object' && data && data.error) {
+                    alert(data.error);
                     return false;
                 }
                 $('#unit_residence_type').html(data);
+                if ($('#residence_type').val()) {
+                    checkResidenceType($('#residence_type').val());
+                }
                 var esti_rent = parseInt($('#estimated_rent').val())
                 var month_rent = ($('#monthly_rent').val());
 
-                var numberWithoutComma = month_rent.replace(/,/g, '');
+                var numberWithoutComma = month_rent ? month_rent.replace(/,/g, '') : '';
                 month_rent = parseInt(numberWithoutComma, 10);
 
                 if(esti_rent && month_rent)

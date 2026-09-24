@@ -199,10 +199,18 @@ class PropertyController extends Controller
 
     public function getPropertyUnits(Request $request, $id)
     {
-        $this->dataAssign['data'] = $this->primary_model->findOrFail($id)->units;
+        $units = $this->primary_model->findOrFail($id)->units;
+        $active_lease_status_id = $this->status_model->getStatusID($this->lease_model->getTable(), 'active');
+        $occupied_unit_ids = $this->lease_model
+            ->whereIn('unit_id', $units->pluck('id')->filter()->all() ?: [0])
+            ->where('lease_status_id', $active_lease_status_id)
+            ->whereDate('end_date', '>', date('Y-m-d'))
+            ->pluck('unit_id')
+            ->all();
 
+        $this->dataAssign['data'] = $units;
+        $this->dataAssign['occupied_unit_ids'] = $occupied_unit_ids;
         $this->dataAssign['sub_module'] = 'unit';
-
         $this->dataAssign['name'] = 'number';
 
         return view($this->layout_base . '.includes.unit', $this->dataAssign);
@@ -210,16 +218,19 @@ class PropertyController extends Controller
 
     public function getResidenceUnitsType($id){
 
-        $this->dataAssign['unit'] = $this->units->find($id);
-        $status_id = $this->status_model->getStatusID($this->lease_model->getTable(), 'active');
-        $lease_data = $this->lease_model->where('unit_id',$id)->orderBy('created_at','DESC')->where('lease_status_id',$status_id)->first();
+        $unit = $this->units->find($id);
+        if (!$unit) {
+            return response('Unit not found.', 404);
+        }
 
-        if(isset($lease_data))
-        {
-            if((date('Y-m-d',time()) < $lease_data->end_date))
-            {
-               return json_encode(['error'=>'This unit is already assigned to other lease! please choose another.']);
-            }
+        $this->dataAssign['unit'] = $unit;
+        $this->dataAssign['occupied_error'] = null;
+
+        $status_id = $this->status_model->getStatusID($this->lease_model->getTable(), 'active');
+        $lease_data = $this->lease_model->where('unit_id', $id)->orderBy('created_at', 'DESC')->where('lease_status_id', $status_id)->first();
+
+        if ($lease_data && date('Y-m-d') < $lease_data->end_date) {
+            $this->dataAssign['occupied_error'] = 'This unit already has an active lease.';
         }
 
         return view($this->layout_base . '.includes.residents_type', $this->dataAssign);

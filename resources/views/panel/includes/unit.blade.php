@@ -3,7 +3,7 @@
     <option value="">Select {{ setText($sub_module) }}</option>
     @foreach($data as $row)
         <option {{ isset($id) ? $id == $row->id ? 'selected' : '' : '' }} value="{{ $row->id }}">
-            {{ $row->{$name} }}
+            {{ $row->{$name} }}{{ !empty($occupied_unit_ids) && in_array($row->id, $occupied_unit_ids) ? ' (occupied)' : '' }}
         </option>
     @endforeach
 </select>

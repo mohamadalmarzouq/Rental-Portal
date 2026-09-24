@@ -525,6 +525,10 @@ class Invoice extends Model implements HasMedia
 
         $paid_status_id = $status_model->getStatusID($this->getTable(), 'approved');
 
+        $type_model = new Type();
+        $revenue_type_id = $type_model->getTypeId($this->getTable(), 'revenue');
+        $expense_type_id = $type_model->getTypeId($this->getTable(), 'expense');
+
         $total_expense = 0;
         $total_revenue = 0;
 
@@ -553,7 +557,7 @@ class Invoice extends Model implements HasMedia
 
                         $q->where('user_id', $current_user->id);
 
-                    })->whereHas('lease')
+                    })->where('type_id', $revenue_type_id)
                     ->whereRaw("YEAR(end_date) = '" . $year . "'")
                     ->where('invoice_status_id', $paid_status_id)
                     ->groupBy('label')
@@ -572,7 +576,7 @@ class Invoice extends Model implements HasMedia
 
                         $q->where('user_id', $current_user->id);
 
-                    })->whereDoesntHave('lease')
+                    })->where('type_id', $expense_type_id)
                     ->where('invoice_status_id', $paid_status_id)
                     ->whereRaw("YEAR(end_date) = '" . $year . "'")
                     ->groupBy('label')
@@ -610,7 +614,7 @@ class Invoice extends Model implements HasMedia
 
                         $q->where('user_id', $current_user->id);
 
-                    })->whereHas('lease')
+                    })->where('type_id', $revenue_type_id)
                     ->where('invoice_status_id', $paid_status_id)
                     ->whereRaw("YEAR(end_date) = '" . $month['year'] . "'")
                     ->whereRaw("MONTHNAME(end_date) = '" . $month['month'] . "'")
@@ -630,7 +634,7 @@ class Invoice extends Model implements HasMedia
 
                         $q->where('user_id', $current_user->id);
 
-                    })->whereDoesntHave('lease')
+                    })->where('type_id', $expense_type_id)
                     ->where('invoice_status_id', $paid_status_id)
                     ->whereRaw("YEAR(end_date) = '" . $month['year'] . "'")
                     ->whereRaw("MONTHNAME(end_date) = '" . $month['month'] . "'")
@@ -768,6 +772,8 @@ class Invoice extends Model implements HasMedia
 
         $paid_status_id = $status_model->getStatusID($this->getTable(), 'approved');
 
+        $expense_type_id = (new Type())->getTypeId($this->getTable(), 'expense');
+
         $graph_data['colors'] = [
             'window.chartColors.palegrey',
             'window.chartColors.white',
@@ -799,7 +805,7 @@ class Invoice extends Model implements HasMedia
 
                     $q->where('user_id', $current_user->id);
 
-                })->whereDoesntHave('lease')
+                })->where('type_id', $expense_type_id)
                 ->where('invoice_status_id', $paid_status_id)
                 ->whereRaw("YEAR(end_date) = '" . $month['year'] . "'")
                 ->whereRaw("MONTHNAME(end_date) = '" . $month['month'] . "'")
