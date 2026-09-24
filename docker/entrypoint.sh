@@ -4,8 +4,9 @@ set -euo pipefail
 cd /var/www/html
 
 PORT="${PORT:-80}"
-sed -i "s/^Listen .*/Listen ${PORT}/" /etc/apache2/ports.conf
-sed -i "s/<VirtualHost \\*:.*>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-available/000-default.conf
+# Only rewrite port 80. Replacing every Listen line also rewrites 443 and Apache exits.
+sed -i "s/^Listen 80$/Listen ${PORT}/" /etc/apache2/ports.conf
+sed -i "s/<VirtualHost \\*:80>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-available/000-default.conf
 
 if [ -n "${RENDER_EXTERNAL_URL:-}" ]; then
     export APP_URL="$RENDER_EXTERNAL_URL"
@@ -34,9 +35,34 @@ if [ -z "${APP_KEY:-}" ] || [ "${APP_KEY}" = "" ]; then
     fi
 fi
 
+# Apache/mod_php often ignores container env and reads .env instead.
+php -r '
+$keys = [
+    "APP_NAME","APP_ENV","APP_KEY","APP_DEBUG","APP_URL",
+    "DB_CONNECTION","DB_HOST","DB_PORT","DB_DATABASE","DB_USERNAME","DB_PASSWORD",
+    "CACHE_DRIVER","SESSION_DRIVER","SESSION_LIFETIME","QUEUE_CONNECTION",
+    "MAIL_DRIVER","LOG_CHANNEL",
+];
+$path = ".env";
+$env = file_exists($path) ? file_get_contents($path) : "";
+foreach ($keys as $k) {
+    $v = getenv($k);
+    if ($v === false || $v === "") {
+        continue;
+    }
+    $line = $k . "=" . (preg_match("/[\s#\"\\\\]/", $v) ? "\"" . str_replace(["\\\\", "\""], ["\\\\\\\\", "\\\""], $v) . "\"" : $v);
+    if (preg_match("/^{$k}=.*/m", $env)) {
+        $env = preg_replace("/^{$k}=.*/m", $line, $env);
+    } else {
+        $env = rtrim($env) . "\n" . $line . "\n";
+    }
+}
+file_put_contents($path, $env);
+'
+
 if [ -n "${DB_HOST:-}" ]; then
     echo "Waiting for MySQL at ${DB_HOST}:${DB_PORT:-3306}..."
-    for i in $(seq 1 60); do
+    for i in $(seq 1 90); do
         if php -r "
             try {
                 new PDO(
@@ -52,7 +78,7 @@ if [ -n "${DB_HOST:-}" ]; then
             echo "MySQL is ready."
             break
         fi
-        if [ "$i" -eq 60 ]; then
+        if [ "$i" -eq 90 ]; then
             echo "MySQL did not become ready in time."
             exit 1
         fi
