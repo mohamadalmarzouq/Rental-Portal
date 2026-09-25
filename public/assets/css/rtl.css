@@ -36,12 +36,16 @@ html[dir="rtl"] .propertyManagementSearchWrap {
 
 html[dir="rtl"] .social_links .nav-classic .nav-link {
     padding-left: 0;
-    padding-right: 28px;
+    padding-right: 0;
+    direction: ltr;
+    flex-direction: row-reverse;
+    gap: 8px;
 }
 
 html[dir="rtl"] .social_links .nav-classic .nav-link i {
+    position: static;
     left: auto;
-    right: 0;
+    right: auto;
 }
 
 html[dir="rtl"] .form-control,
