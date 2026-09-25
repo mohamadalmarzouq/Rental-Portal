@@ -58,3 +58,19 @@ html[dir="rtl"] .dropdown-menu-right {
     right: auto;
     left: 0;
 }
+
+html[dir="rtl"] [id^="barometer"] .container,
+html[dir="rtl"] [id^="barometer"] .pie,
+html[dir="rtl"] [id^="barometer"] .arrow {
+    direction: ltr;
+}
+
+html[dir="rtl"] [id^="barometer"] .d-flex {
+    direction: ltr;
+    flex-wrap: wrap;
+}
+
+html[dir="rtl"] [id^="barometer"] label,
+html[dir="rtl"] [id^="barometer"] p {
+    text-align: left;
+}
