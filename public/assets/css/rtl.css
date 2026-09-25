@@ -1,54 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+html[dir="rtl"],
 html[dir="rtl"] body {
-    font-family: "Segoe UI", Tahoma, "Noto Sans Arabic", "Arial", sans-serif;
     direction: rtl;
     text-align: right;
+    font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
 }
 
-html[dir="rtl"] .navbar-brand,
-html[dir="rtl"] .navbar-right,
+html[dir="rtl"] * {
+    letter-spacing: 0 !important;
+}
+
+html[dir="rtl"] .tx-uppercase,
+html[dir="rtl"] .tx-spacing-1,
+html[dir="rtl"] .tx-spacing--1 {
+    text-transform: none;
+    letter-spacing: 0 !important;
+}
+
+html[dir="rtl"] .navbar-header,
 html[dir="rtl"] .navWrap,
-html[dir="rtl"] .d-flex {
+html[dir="rtl"] .navbar-menu,
+html[dir="rtl"] .cusSelectWrp,
+html[dir="rtl"] .propertyManagementSearchWrap {
     direction: rtl;
 }
 
-html[dir="rtl"] .navbar-right {
-    margin-left: 0;
-    margin-right: auto;
-}
-
-html[dir="rtl"] .ml-auto {
-    margin-left: 0 !important;
-    margin-right: auto !important;
-}
-
-html[dir="rtl"] .mr-2,
-html[dir="rtl"] .mr-3 {
-    margin-right: 0 !important;
-    margin-left: 0.5rem !important;
-}
-
-html[dir="rtl"] .ml-3,
-html[dir="rtl"] .ml-2 {
-    margin-left: 0 !important;
-    margin-right: 0.75rem !important;
-}
-
-html[dir="rtl"] .text-right,
-html[dir="rtl"] .submitBtn {
-    text-align: left !important;
-}
-
-html[dir="rtl"] .dropdown-menu-right {
-    right: auto;
-    left: 0;
-}
-
+html[dir="rtl"] .form-control,
 html[dir="rtl"] .custom-select,
-html[dir="rtl"] .form-control {
+html[dir="rtl"] select {
     text-align: right;
 }
 
 html[dir="rtl"] .table th,
 html[dir="rtl"] .table td {
     text-align: right;
+}
+
+html[dir="rtl"] .dataTables_wrapper .dataTables_info {
+    float: right;
+    text-align: right;
+}
+
+html[dir="rtl"] .dataTables_wrapper .dataTables_paginate {
+    float: left;
+}
+
+html[dir="rtl"] .dropdown-menu-right {
+    right: auto;
+    left: 0;
 }

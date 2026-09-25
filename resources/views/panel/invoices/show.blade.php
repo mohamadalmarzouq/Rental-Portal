@@ -93,11 +93,11 @@
 
                                             <form method="GET" action="{{ route($module . '.search') }}">
                                                 <div class="d-flex flex-row cusSelectWrp">
-                                                    <select data-placeholder="Property"
+                                                    <select data-placeholder="{{ t('common.property') }}"
                                                         class="cusSelect custom-select font-weight-500 mr-3 w-auto"
                                                         name="property" id="property">
                                                         <!-- <input type="text"> -->
-                                                        <option value="">Property</option>
+                                                        <option value="">{{ t('common.property') }}</option>
                                                         @foreach ($properties as $property)
                                                             <option
                                                                 {{ isset($search_invoice['property']) ? checkSelectValue($search_invoice['property'], $property->id) : '' }}
@@ -109,10 +109,10 @@
 
 
 
-                                                    <select data-placeholder="All Status"
+                                                    <select data-placeholder="{{ t('common.all_status') }}"
                                                         class="cusSelect custom-select font-weight-500 mr-3" name="status"
                                                         id="status">
-                                                        <option value="">Status</option>
+                                                        <option value="">{{ t('common.status') }}</option>
                                                         @foreach ($statuses as $status)
                                                             <option
                                                                 {{ isset($search_invoice['status']) ? checkSelectValue($search_invoice['status'], $status->id) : '' }}
@@ -121,10 +121,10 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                    <select data-placeholder="Payment Method"
+                                                    <select data-placeholder="{{ t('common.payment_method') }}"
                                                         class="cusSelect custom-select font-weight-500 mr-3" name="method"
                                                         id="method">
-                                                        <option value="">Method</option>
+                                                        <option value="">{{ t('common.payment_method') }}</option>
                                                         @foreach ($payment_methods as $payment_method)
                                                             <option
                                                                 {{ isset($search_invoice['method']) ? checkSelectValue($search_invoice['method'], $payment_method->id) : '' }}
@@ -264,11 +264,11 @@
 
                                             <form method="GET" action="{{ route($module . '.search') }}">
                                                 <div class="d-flex flex-row cusSelectWrp">
-                                                    <select data-placeholder="Property"
+                                                    <select data-placeholder="{{ t('common.property') }}"
                                                         class="cusSelect custom-select font-weight-500 mr-3 w-auto"
                                                         name="property" id="property">
                                                         <!-- <input type="text"> -->
-                                                        <option value="">Property</option>
+                                                        <option value="">{{ t('common.property') }}</option>
                                                         @foreach ($properties as $property)
                                                             <option
                                                                 {{ isset($search_invoice['property']) ? checkSelectValue($search_invoice['property'], $property->id) : '' }}
@@ -280,10 +280,10 @@
 
 
 
-                                                    <select data-placeholder="All Status"
+                                                    <select data-placeholder="{{ t('common.all_status') }}"
                                                         class="cusSelect custom-select font-weight-500 mr-3"
                                                         name="status" id="status">
-                                                        <option value="">Status</option>
+                                                        <option value="">{{ t('common.status') }}</option>
                                                         @foreach ($statuses as $status)
                                                             <option
                                                                 {{ isset($search_invoice['status']) ? checkSelectValue($search_invoice['status'], $status->id) : '' }}
@@ -292,10 +292,10 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                    <select data-placeholder="Payment Method"
+                                                    <select data-placeholder="{{ t('common.payment_method') }}"
                                                         class="cusSelect custom-select font-weight-500 mr-3"
                                                         name="method" id="method">
-                                                        <option value="">Method</option>
+                                                        <option value="">{{ t('common.payment_method') }}</option>
                                                         @foreach ($payment_methods as $payment_method)
                                                             <option
                                                                 {{ isset($search_invoice['method']) ? checkSelectValue($search_invoice['method'], $payment_method->id) : '' }}

@@ -42,10 +42,18 @@
                 processing: true,
                 serverSide: true,
                 stateSave: true,
+                stateSaveParams: function (settings, data) {
+                    data.locale = @json(app()->getLocale());
+                },
+                stateLoadParams: function (settings, data) {
+                    if (data.locale !== @json(app()->getLocale())) {
+                        return false;
+                    }
+                },
                 ajax: '{!! $route !!}',
                 paging : {{ isset($paging) ? $paging : 'true' }},
                 ordering : {!! isset($ordering) ? $ordering : 'false' !!},
-                columns: {!! $data_table_columns !!},
+                columns: {!! translateDataTableColumns($data_table_columns) !!},
                 language: {
                     paginate: {
                         previous: @json(t('common.previous')),

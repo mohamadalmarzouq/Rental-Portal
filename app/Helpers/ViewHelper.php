@@ -44,7 +44,7 @@ function tn($text)
     }
 
     $slug = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '_', $text), '_'));
-    foreach (['label.' . $slug, 'nav.' . $slug, 'common.' . $slug, 'status.' . $slug, 'page.' . $slug] as $key) {
+    foreach (['label.' . $slug, 'nav.' . $slug, 'common.' . $slug, 'status.' . $slug, 'page.' . $slug, 'action.' . $slug] as $key) {
         $line = __('ui.' . $key);
         if ($line !== 'ui.' . $key) {
             return $line;
@@ -52,6 +52,22 @@ function tn($text)
     }
 
     return $text;
+}
+
+function translateDataTableColumns($json)
+{
+    $columns = is_string($json) ? json_decode($json) : $json;
+    if (!$columns) {
+        return $json;
+    }
+
+    foreach ($columns as $column) {
+        if (!empty($column->title)) {
+            $column->title = tn($column->title);
+        }
+    }
+
+    return json_encode($columns);
 }
 
 function setText($string, $singular = false)

@@ -1,17 +1,17 @@
 <div class="col-12 mg-b-50 outstandingBalancesWrap">
     @if(isset($widget->listing_data->total_amount))
 
-        <h3 class="mg-b-20  tx-27 tx-bold">{{ $widget->title }}</h3>
+        <h3 class="mg-b-20  tx-27 tx-bold">{{ tn($widget->title) }}</h3>
         <div class="total_outstanding">
-            <span class="total_collection_title mg-b-10 d-block">{{ $widget->sub_title }}</span>
+            <span class="total_collection_title mg-b-10 d-block">{{ tn($widget->sub_title) }}</span>
             <h2 class="m-0 tx-roboto"><span
                     class="kwd ">KWD</span>{{ str_replace('KWD','',addCommaForNumeric($widget->listing_data->total_amount)) }}
             </h2>
         </div>
     @else
 
-        <h3 class="mg-b-20 tx-27 tx-bold">{{ $widget->title }}
-            <span class="d-block  mg-t-5">{{ $widget->sub_title }}</span>
+        <h3 class="mg-b-20 tx-27 tx-bold">{{ tn($widget->title) }}
+            <span class="d-block  mg-t-5">{{ tn($widget->sub_title) }}</span>
         </h3>
     @endif
         @isset($show_in_dashboard)
@@ -20,7 +20,7 @@
                     <input type="checkbox" class="custom-control-input" name="show{{ $widget->id }}"
                            id="show{{ $widget->id }}"
                            data-id="{{ $widget->id }}" {{ showInDashboard($widget->id) ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="show{{ $widget->id }}">Show in Dashboard</label>
+                    <label class="custom-control-label" for="show{{ $widget->id }}">{{ tn('Show in Dashboard') }}</label>
                 </div>
             </div>
         @endisset
@@ -36,7 +36,7 @@
                 </svg>
             </button>
             <input type="search" id="search{{ $widget->id }}" class="form-control border-0 pl-1 clickInput"
-                   placeholder="Search">
+                   placeholder="{{ t('common.search') }}">
         </div>
         @push('custom-scripts')
             <script type="text/javascript">

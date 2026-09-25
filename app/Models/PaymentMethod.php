@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class PaymentMethod extends Model
 {
+    public function getNameAttribute($value)
+    {
+        return tn($value);
+    }
+
     public function getPropertyPaymentsMethods()
     {
         return $this->where('module', 'properties')->get();

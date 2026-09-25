@@ -31,7 +31,7 @@
                         </div> --}}
                         <div class="form-group mb-2 ml-2">
                             <input type="text" name="date" id="start_date_global_search" class="form-control"
-                                placeholder="Start Date">
+                                placeholder="{{ tn('Start Date') }}">
                         </div>
                     </form>
                 </div>
@@ -39,7 +39,7 @@
                     <form id="property-form" class="cusSelectWrp" method="get">
                         <select class="cusSelect custom-select font-weight-500" name="property"
                             onchange="changePropertyForReports(event,$(this).val())">
-                            <option value="">All Properties</option>
+                            <option value="">{{ t('common.all_properties') }}</option>
                             @foreach ($properties as $property)
                                 <option {{ $property_id == $property->id ? 'selected' : '' }} value="{{ $property->id }}">
                                     {{ $property->name }}

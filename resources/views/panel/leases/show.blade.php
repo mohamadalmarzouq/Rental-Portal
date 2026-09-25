@@ -61,7 +61,7 @@
                     </div>
                     <form method="GET" action="{{ route($module.'.search') }}">
                         <div class="d-flex flex-row cusSelectWrp">
-                            <select data-placeholder="Lease Type" class="cusSelect custom-select font-weight-500 mr-3 w-auto" name="type" id="type">
+                            <select data-placeholder="{{ tn('Lease Type') }}" class="cusSelect custom-select font-weight-500 mr-3 w-auto" name="type" id="type">
                                 <option value="">{{ tn('Lease Type') }}</option>
                                 @foreach($types as $type)
                                     <option

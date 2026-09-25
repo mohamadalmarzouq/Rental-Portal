@@ -8,6 +8,11 @@ class Type extends Model
 {
     protected $appends = ['schedule_date_report', 'schedule_time_report'];
 
+    public function getNameAttribute($value)
+    {
+        return tn($value);
+    }
+
     public function getColumnsForDataTable()
     {
         $data = [

@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
+    public function getStatusAttribute($value)
+    {
+        return tn($value);
+    }
+
     public function getPropertyStatus()
     {
         return $this->where('module', 'properties')->get();
