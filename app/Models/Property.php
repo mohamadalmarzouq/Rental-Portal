@@ -340,22 +340,32 @@ class Property extends Model
     public function getDataForPropertyBarometer($request)
     {
         $invoice_model = new Invoice();
-
         $type_model = new Type();
-
-        $revenue = $invoice_model->ajaxlisting();
-
-        if (isset($request['property'])) {
-
-            $revenue = $revenue->where('property_id', $request['property']);
-        }
-
         $revenue_type_id = $type_model->getTypeId($invoice_model->getTable(), 'revenue');
+        $status_ids = Status::where('module', 'invoices')
+            ->whereIn('slug', ['approved', 'paid'])
+            ->pluck('id');
 
-        $data['value'] = $revenue->where('type_id', $revenue_type_id)
-            ->whereYear('created_at', date('Y'))
-            ->sum('total_amount');
-        // dd($data);
+        $collected = function () use ($invoice_model, $revenue_type_id, $status_ids, $request) {
+            $query = $invoice_model->ajaxlisting()
+                ->where('type_id', $revenue_type_id)
+                ->whereIn('invoice_status_id', $status_ids);
+
+            if (!empty($request['property'])) {
+                $query->where('property_id', $request['property']);
+            }
+
+            return $query;
+        };
+
+        $data['value'] = $collected()
+            ->whereYear('end_date', date('Y'))
+            ->sum('total_amount') ?: 0;
+
+        $data['monthly_income'] = $collected()
+            ->whereYear('end_date', date('Y'))
+            ->whereMonth('end_date', date('m'))
+            ->sum('total_amount') ?: 0;
 
         return json_encode($data);
     }

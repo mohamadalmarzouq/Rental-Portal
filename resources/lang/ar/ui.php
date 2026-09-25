@@ -239,6 +239,8 @@ return [
         'percentage' => 'النسبة',
         'yearly_target' => 'الهدف السنوي',
         'monthly_target' => 'الهدف الشهري',
+        'this_month' => 'هذا الشهر',
+        'monthly_income' => 'إيراد هذا الشهر',
         'property_value' => 'قيمة العقار',
         'enter_percentage' => 'أدخل النسبة',
         'days_overdue' => 'أيام التأخير',

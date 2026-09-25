@@ -89,18 +89,18 @@
     </script>
     <script>
         @if ($widget->method == 'getDataForVacancyBarometer')
-            function getHtmlForPerformance(options) {
-
-                return $(
-                    "<div class='d-flex align-items-center mt-3'><div class='w-25 mr-3'><label>{{ tn('Percentage') }}</label><input class='form-control' onkeyup='percentageBarometer($(this).val())' placeholder='{{ tn('Enter Percentage') }}' type=\"number\" min=\"0\" max=\"100\" step=\"" +
-                    options +
-                    "\"/></div><div class='w-25 mr-3'><label>{{ tn('Property Value') }}</label><input class='form-control' onkeyup='propertyValueBarometer($(this).val())' placeholder='{{ tn('Property Value') }}' type=\"number\" min=\"0\" max=\"100\"/></div><div class='d-flex'><div class='mr-3'><label>{{ tn('Monthly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='monthlyTargetBarometer'>-</p></div><div><label>{{ tn('Yearly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='yearlyTargetBarometer'>-</p></div></div></div>"
-                    );
-            }
-        @else
             function getHtmlForVacancy(options) {
                 return $(
                     "<div class='d-flex align-items-center mt-3'><div class='d-flex'><div class='mr-3'><label>{{ tn('Percentage') }}</label><p class='font-weight-bold pt-1 m-0' id='vacancy-percentage'>-</p></div><div><label>{{ tn('Value') }}</label><p class='font-weight-bold pt-1 m-0' id='vacancy-value'>-</p></div></div></div>"
+                    );
+            }
+        @else
+            function getHtmlForPerformance(options) {
+
+                return $(
+                    "<div class='d-flex align-items-center mt-3 flex-wrap'><div class='mr-3 mb-2'><label>{{ tn('Percentage') }}</label><input class='form-control' oninput='percentageBarometer($(this).val())' placeholder='{{ tn('Enter Percentage') }}' type=\"number\" min=\"0\" max=\"100\" step=\"" +
+                    options +
+                    "\"/></div><div class='mr-3 mb-2'><label>{{ tn('Property Value') }}</label><input class='form-control' oninput='propertyValueBarometer($(this).val())' placeholder='{{ tn('Property Value') }}' type=\"number\" min=\"0\"/></div><div class='mr-3 mb-2'><label>{{ tn('This Month') }}</label><p class='font-weight-bold pt-1 m-0' id='monthlyIncomeBarometer'>{{ isset($widget->graph_data->monthly_income) ? number_format((float) $widget->graph_data->monthly_income, 2, '.', '') : '0.00' }}</p></div><div class='mr-3 mb-2'><label>{{ tn('Monthly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='monthlyTargetBarometer'>-</p></div><div class='mb-2'><label>{{ tn('Yearly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='yearlyTargetBarometer'>-</p></div></div>"
                     );
             }
         @endif
@@ -242,17 +242,23 @@
                 let current_monthly_target{{ $widget->id }} = ((current_yearly_target{{ $widget->id }}) / 12).toFixed(
                     2);
 
-                let total_target{{ $widget->id }} = parseFloat('{{ $widget->graph_data->value }}') /
-                    current_yearly_target{{ $widget->id }};
+                let monthly_income{{ $widget->id }} = parseFloat(
+                    '{{ isset($widget->graph_data->monthly_income) ? $widget->graph_data->monthly_income : 0 }}'
+                ) || 0;
+                let monthly_target{{ $widget->id }} = parseFloat(current_monthly_target{{ $widget->id }}) || 0;
 
-                let degs{{ $widget->id }} = 0;
+                let degs{{ $widget->id }} = 160;
 
-                if (total_target{{ $widget->id }} > 7) {
-                    degs{{ $widget->id }} = 160
-                } else if (total_target{{ $widget->id }} == 7) {
-                    degs{{ $widget->id }} = 90
-                } else if (total_target{{ $widget->id }} < 7) {
-                    degs{{ $widget->id }} = 25;
+                if (monthly_target{{ $widget->id }} > 0) {
+                    let ratio{{ $widget->id }} = monthly_income{{ $widget->id }} / monthly_target{{ $widget->id }};
+
+                    if (ratio{{ $widget->id }} >= 1.1) {
+                        degs{{ $widget->id }} = 25;
+                    } else if (ratio{{ $widget->id }} >= 1) {
+                        degs{{ $widget->id }} = 90;
+                    } else {
+                        degs{{ $widget->id }} = 160;
+                    }
                 }
 
                 $('#monthlyTargetBarometer').html(current_monthly_target{{ $widget->id }});
