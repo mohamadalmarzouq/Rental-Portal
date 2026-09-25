@@ -1,7 +1,7 @@
 <div class="mg-b-50 d-flex {{ $widget->class }}">
     <div class="card card-body counterWrap">
         <span class="imgWrp">
-            @include('panel.widget_types.counter_icon', ['widget' => $widget])
+            <img class="img-fluid" src="{{ asset($widget->icon) }}" alt="">
         </span>
         <h6 class="tx-uppercase">{{ tn($widget->title) }}</h6>
         <div class="d-flex d-lg-block d-xl-flex align-items-end mb-2" id="cardsData">

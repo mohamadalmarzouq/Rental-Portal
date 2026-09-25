@@ -529,12 +529,7 @@ input[type=number] {
     justify-content: center;
     margin-bottom: 15px;
 }
-.counterWrap .imgWrp img,
-.counterWrap .imgWrp svg {
-    width: 22px;
-    height: 22px;
-    fill: #fff;
-}
+.counterWrap .imgWrp img{width: 31px}
 .w-18 {
     width: 18px;
 }
