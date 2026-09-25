@@ -461,7 +461,7 @@ class Lease extends Model
 
         $graph_data['colors'] = ['window.chartColors.dodgerblue', 'window.chartColors.lipstick'];
 
-        $graph_data['x'] = ['Leases Signed', 'Leases Terminated'];
+        $graph_data['x'] = [tn('Leases Signed'), tn('Leases Terminated')];
 
         $period = new \DatePeriod(
             (new \DateTime($start_date))->modify('first day of this month'),

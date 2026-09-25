@@ -534,7 +534,7 @@ class Invoice extends Model implements HasMedia
 
         $graph_data['colors'] = ['window.chartColors.greenblue', 'window.chartColors.lipstick'];
 
-        $graph_data['x'] = ['Revenue', 'Expense'];
+        $graph_data['x'] = [tn('Revenue'), tn('Expense')];
         if ($value == 'unit_years') {
 
             $years = [];
@@ -781,7 +781,7 @@ class Invoice extends Model implements HasMedia
             'window.chartColors.lipstick'
         ];
 
-        $graph_data['x'] = 'Expense';
+        $graph_data['x'] = tn('Expense');
 
         $period = new \DatePeriod(
             (new \DateTime($start_date))->modify('first day of this month'),

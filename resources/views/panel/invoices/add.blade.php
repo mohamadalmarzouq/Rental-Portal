@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered set_modal_width" role="document">
         <div class="modal-content tx-14">
             <div class="modal-header border-0">
-                <h6 class="modal-title tx-20 tx-bold" id="exampleModalLabel2">Add New {{ setText($module, true) }}</h6>
+                <h6 class="modal-title tx-20 tx-bold" id="exampleModalLabel2">{{ addTitle($module) }}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -15,17 +15,17 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="" class="mb-1 tx-medium">Invoice Date</label>
+                                <label for="" class="mb-1 tx-medium">{{ tn('Invoice Date') }}</label>
                                 <input type="text" name="revenue_start_date" id="revenue_start_date"
-                                    class="form-control" placeholder="Start Date" value="">
+                                    class="form-control" placeholder="{{ tn('Start Date') }}" value="">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="" class="mb-1 tx-medium">Payment Method</label>
+                                <label for="" class="mb-1 tx-medium">{{ t('common.payment_method') }}</label>
                                 <select class="custom-select mr-0 font-weight-500" name="payment_method_id"
                                     id="payment_method_id">
-                                    <option value="">Payment Method</option>
+                                    <option value="">{{ t('common.payment_method') }}</option>
                                     @foreach ($payment_methods as $payment_method)
                                         <option value="{{ $payment_method->id }}">
                                             {{ $payment_method->name }}
@@ -38,9 +38,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="" class="mb-1 tx-medium">Description (Optional)</label>
+                                <label for="" class="mb-1 tx-medium">{{ tn('Description (Optional)') }}</label>
                                 <textarea id="description" name="description" class="form-control" cols="30" rows="3"
-                                    placeholder="Enter Description"></textarea>
+                                    placeholder="{{ tn('Enter Description') }}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -48,10 +48,10 @@
                         <div class="row">
                             <div class="col-sm-6 property">
                                 <div class="form-group">
-                                    <label for="" class="mb-1 tx-medium">Property</label>
+                                    <label for="" class="mb-1 tx-medium">{{ t('common.property') }}</label>
                                     <select class="custom-select mr-0 font-weight-500 property_name" data-counter="1" name="extras[1][property_id]"
                                         id="property_id">
-                                        <option value="">Property</option>
+                                        <option value="">{{ t('common.property') }}</option>
                                         @foreach ($properties as $property)
                                             <option value="{{ $property->id }}">
                                                 {{ $property->name }}
@@ -66,20 +66,20 @@
                                     <label for="" class="mb-1 tx-medium">Unit</label>
                                     <select class="custom-select mr-0 font-weight-500 unit-id-1" name="extras[1][unit_id]"
                                         id="unit_id">
-                                        <option value="">Select Unit</option>
+                                        <option value="">{{ tn('Select Unit') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="" class="mb-1 tx-medium">Amount</label>
+                                    <label for="" class="mb-1 tx-medium">{{ t('common.amount') }}</label>
                                     <input type="text" name="extras[1][total_amount]" id="total_amount"
-                                        class="form-control" placeholder="Amount"
+                                        class="form-control" placeholder="{{ t('common.amount') }}"
                                         onkeyup="ReplaceNumberWithCommas($(this).val(),$(this))">
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <label for="" class="mb-1 tx-medium">Lease/Non Lease</label>
+                                <label for="" class="mb-1 tx-medium">{{ tn('Lease/Non Lease') }}</label>
                                 <div class="custom-control custom-switch cusToggle mg-t-8">
                                     <input type="hidden" name="extras[1][is_lease]" value="1">
                                     <input type="checkbox" name="extras[1][is_lease]" id="extras[1][is_lease]"
@@ -89,9 +89,9 @@
                             </div>
                             <div class="col-sm-6 waive-amount-1 d-flex">
                                 <div class="form-group">
-                                    <label for="" class="mb-1 tx-medium">Waived amount</label>
+                                    <label for="" class="mb-1 tx-medium">{{ tn('Waived amount') }}</label>
                                     <input type="text" name="extras[1][waive_amount]" id="waive_amount"
-                                        class="form-control" placeholder="Amount"
+                                        class="form-control" placeholder="{{ t('common.amount') }}"
                                         onkeyup="ReplaceNumberWithCommas($(this).val(),$(this))">
                                 </div>
                                 <input class="mx-2" type="checkbox" name="" id="" checked>
@@ -102,8 +102,8 @@
                         </div>
                     </div>
                     <input type="hidden" id="section-count" value="1">
-                    <button class="btn btn-primary" type="button" id="add">Add (+)</button>
-                    <button class="btn btn-primary" type="button" id="sub">Remove (-)</button>
+                    <button class="btn btn-primary" type="button" id="add">{{ tn('Add') }} (+)</button>
+                    <button class="btn btn-primary" type="button" id="sub">{{ tn('Remove') }} (-)</button>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group cusCheckBox custom-control custom-checkbox">
@@ -117,7 +117,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="document">Attachments</label>
+                                <label for="document">{{ tn('Attachments') }}</label>
                                 <div class="needsclick dropzone cusDropzone dropzone dz-clickable d-flex align-items-center justify-content-center"
                                     id="document-dropzone">
 
@@ -127,14 +127,14 @@
 
                     </div>
                     {{-- <div class="text-right submitBtn">
-                        <button class="btn btn-primary download-btn" type="submit">Submit</button>
+                        <button class="btn btn-primary download-btn" type="submit">{{ tn('Submit') }}</button>
                     </div> --}}
                     <div
                         class="btn_loader_wrap add position-relative d-flex align-items-center justify-content-end ml-auto submitBtn mt-3">
                         <div class="btn_loader">
                             <div class="loader"></div>
                         </div>
-                        <button class="btn btn-primary download-btn" type="submit">Submit</button>
+                        <button class="btn btn-primary download-btn" type="submit">{{ tn('Submit') }}</button>
                     </div>
                 </form>
             </div>
@@ -148,7 +148,7 @@
     <div class="modal-dialog modal-dialog-centered set_modal_width" role="document">
         <div class="modal-content tx-14">
             <div class="modal-header border-0">
-                <h6 class="modal-title tx-20 tx-bold" id="exampleModalLabel2">Add New Expenses</h6>
+                <h6 class="modal-title tx-20 tx-bold" id="exampleModalLabel2">{{ t('form.add_expenses') }}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -161,7 +161,7 @@
                         <input type="hidden" name="type_id" value="{{ $expense_type_id }}">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="" class="mb-1 tx-medium">Invoice Date</label>
+                                <label for="" class="mb-1 tx-medium">{{ tn('Invoice Date') }}</label>
 
                                 <input type="text" name="date_start_expense" id="date_start_expense"
                                     class="form-control" placeholder="Start Date" value="">
@@ -169,17 +169,17 @@
                         </div>
                         <div class="col-sm-12 property">
                             <div class="form-group">
-                                <label for="" class="mb-1 tx-medium">Description (Optional)</label>
-                                <textarea name="description" class="form-control" cols="30" rows="3" placeholder="Enter Description"></textarea>
+                                <label for="" class="mb-1 tx-medium">{{ tn('Description (Optional)') }}</label>
+                                <textarea name="description" class="form-control" cols="30" rows="3" placeholder="{{ tn('Enter Description') }}"></textarea>
                             </div>
                         </div>
                         <div class="col-sm-6 lease">
 
                             <div class="form-group" id="unit">
-                                <label for="" class="mb-1 tx-medium">Property</label>
+                                <label for="" class="mb-1 tx-medium">{{ t('common.property') }}</label>
                                 <select name="expense_property_id" class="form-control border"
                                     id="expense_property_id">
-                                    <option value="">Select Property</option>
+                                    <option value="">{{ tn('Select Property') }}</option>
                                     @foreach ($properties as $property)
                                         <option value="{{ $property->id }}">
                                             {{ $property->name }}
@@ -190,19 +190,19 @@
                         </div>
                         <div class="col-sm-6 lease">
                             <div class="form-group">
-                                <label for="" class="mb-1 tx-medium">Amount</label>
+                                <label for="" class="mb-1 tx-medium">{{ t('common.amount') }}</label>
                                 <input type="text" name="expense_amount" id="expense_amount" class="form-control"
-                                    placeholder="Amount" onkeyup="ReplaceNumberWithCommas($(this).val(),$(this))">
+                                    placeholder="{{ t('common.amount') }}" onkeyup="ReplaceNumberWithCommas($(this).val(),$(this))">
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="document" class="tx-medium">Attachments</label>
+                                <label for="document" class="tx-medium">{{ tn('Attachments') }}</label>
                                 <div class="needsclick dropzone cusDropzone dz-clickable d-flex align-items-center justify-content-center"
                                     id="document-dropzone">
 
                                     <div class="dz-default dz-message">
-                                        <button class="dz-button" type="button">Drop files here to upload</button>
+                                        <button class="dz-button" type="button">{{ tn('Drop files here to upload') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -210,14 +210,14 @@
 
                     </div>
                     {{-- <div class="text-right submitBtn">
-                        <button class="btn btn-primary download-btn" type="submit">Submit</button>
+                        <button class="btn btn-primary download-btn" type="submit">{{ tn('Submit') }}</button>
                     </div> --}}
                     <div
                         class="btn_loader_wrap add position-relative d-flex align-items-center justify-content-end ml-auto submitBtn mt-3">
                         <div class="btn_loader">
                             <div class="loader"></div>
                         </div>
-                        <button class="btn btn-primary download-btn" type="submit">Submit</button>
+                        <button class="btn btn-primary download-btn" type="submit">{{ tn('Submit') }}</button>
                     </div>
                 </form>
             </div>
@@ -317,10 +317,10 @@
                 var html = `<div class="row">
                             <div class="col-sm-6 property">
                                 <div class="form-group">
-                                    <label for="" class="mb-1 tx-medium">Property</label>
+                                    <label for="" class="mb-1 tx-medium">{{ t('common.property') }}</label>
                                     <select class="custom-select mr-0 font-weight-500 property_name" data-counter=`+count+` name="extras[`+count+`][property_id]"
                                         id="property_id">
-                                        <option value="">Property</option>
+                                        <option value="">{{ t('common.property') }}</option>
                                         @foreach ($properties as $property)
                                             <option value="{{ $property->id }}">
                                                 {{ $property->name }}
@@ -335,7 +335,7 @@
                                     <label for="" class="mb-1 tx-medium">Unit</label>
                                     <select class="custom-select mr-0 font-weight-500 unit-id-`+count+`" name="extras[`+count+`][unit_id]"
                                         id="unit_id">
-                                        <option value="">Select Unit</option>
+                                        <option value="">{{ tn('Select Unit') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -347,7 +347,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <label for="" class="mb-1 tx-medium">Lease/Non Lease</label>
+                                <label for="" class="mb-1 tx-medium">{{ tn('Lease/Non Lease') }}</label>
                                 <div class="custom-control custom-switch cusToggle mg-t-8">
                                     <input type="hidden" name="extras[`+count+`][is_lease]" value="1">
                                     <input type="checkbox" name="extras[`+count+`][is_lease]" id="extras[`+count+`][is_lease]" class="custom-control-input check-lease" data-count=`+count+` value="0">

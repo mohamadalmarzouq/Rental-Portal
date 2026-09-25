@@ -44,18 +44,18 @@
                     </div>
                     <div class="d-flex flex-row cusSelectWrp" >
 
-                        <select data-placeholder="Select Property"  class="cusSelect custom-select font-weight-500 mr-3 w-auto" onchange="changeProperty($(this).val())"  id="property_filter">
-                            <option value="" disabled selected>Select Property</option>
-                            <option value="all" >All</option>
+                        <select data-placeholder="{{ tn('Select Property') }}"  class="cusSelect custom-select font-weight-500 mr-3 w-auto" onchange="changeProperty($(this).val())"  id="property_filter">
+                            <option value="" disabled selected>{{ tn('Select Property') }}</option>
+                            <option value="all" >{{ tn('All') }}</option>
                             @foreach($properties as $key=>$value)
                                 <option value="{{$value}}">{{$key}}</option>
                             @endforeach
 
                         </select>
 
-                        <select data-placeholder="Select Status"  class="cusSelect custom-select font-weight-500 mr-3 w-auto" onchange="changeStatus($(this).val())"  id="status_filter">
-                            <option value="" disabled selected>Select Status</option>
-                            <option value="all" >All</option>
+                        <select data-placeholder="{{ tn('Select Status') }}"  class="cusSelect custom-select font-weight-500 mr-3 w-auto" onchange="changeStatus($(this).val())"  id="status_filter">
+                            <option value="" disabled selected>{{ tn('Select Status') }}</option>
+                            <option value="all" >{{ tn('All') }}</option>
                             @foreach($statuses as $key=>$value)
 
                                 <option value="{{$value->id}}">{{$value->status}}</option>

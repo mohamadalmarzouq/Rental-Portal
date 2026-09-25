@@ -70,6 +70,11 @@ function translateDataTableColumns($json)
     return json_encode($columns);
 }
 
+function addTitle($module)
+{
+    return t('form.add_' . $module, t('common.add_new') . ' ' . setText($module, true));
+}
+
 function setText($string, $singular = false)
 {
     $slug = strtolower(str_replace(' ', '_', $string));

@@ -92,15 +92,15 @@
             function getHtmlForPerformance(options) {
 
                 return $(
-                    "<div class='d-flex align-items-center mt-3'><div class='w-25 mr-3'><label>Percentage</label><input class='form-control' onkeyup='percentageBarometer($(this).val())' placeholder='Enter Percentage' type=\"number\" min=\"0\" max=\"100\" step=\"" +
+                    "<div class='d-flex align-items-center mt-3'><div class='w-25 mr-3'><label>{{ tn('Percentage') }}</label><input class='form-control' onkeyup='percentageBarometer($(this).val())' placeholder='{{ tn('Enter Percentage') }}' type=\"number\" min=\"0\" max=\"100\" step=\"" +
                     options +
-                    "\"/></div><div class='w-25 mr-3'><label>Property Value</label><input class='form-control' onkeyup='propertyValueBarometer($(this).val())' placeholder='Property Value' type=\"number\" min=\"0\" max=\"100\"/></div><div class='d-flex'><div class='mr-3'><label>Monthly Target</label><p class='font-weight-bold pt-1 m-0' id='monthlyTargetBarometer'>-</p></div><div><label>Yearly Target</label><p class='font-weight-bold pt-1 m-0' id='yearlyTargetBarometer'>-</p></div></div></div>"
+                    "\"/></div><div class='w-25 mr-3'><label>{{ tn('Property Value') }}</label><input class='form-control' onkeyup='propertyValueBarometer($(this).val())' placeholder='{{ tn('Property Value') }}' type=\"number\" min=\"0\" max=\"100\"/></div><div class='d-flex'><div class='mr-3'><label>{{ tn('Monthly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='monthlyTargetBarometer'>-</p></div><div><label>{{ tn('Yearly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='yearlyTargetBarometer'>-</p></div></div></div>"
                     );
             }
         @else
             function getHtmlForVacancy(options) {
                 return $(
-                    "<div class='d-flex align-items-center mt-3'><div class='d-flex'><div class='mr-3'><label>Percentage</label><p class='font-weight-bold pt-1 m-0' id='vacancy-percentage'>-</p></div><div><label>Value</label><p class='font-weight-bold pt-1 m-0' id='vacancy-value'>-</p></div></div></div>"
+                    "<div class='d-flex align-items-center mt-3'><div class='d-flex'><div class='mr-3'><label>{{ tn('Percentage') }}</label><p class='font-weight-bold pt-1 m-0' id='vacancy-percentage'>-</p></div><div><label>{{ tn('Value') }}</label><p class='font-weight-bold pt-1 m-0' id='vacancy-value'>-</p></div></div></div>"
                     );
             }
         @endif

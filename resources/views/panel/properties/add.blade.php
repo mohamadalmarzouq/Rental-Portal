@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered set_modal_width" role="document">
         <div class="modal-content tx-14">
             <div class="modal-header border-0">
-                <h6 class="modal-title tx-20 tx-bold" id="exampleModalLabel2">Add New {{ setText($module,true) }}</h6>
+                <h6 class="modal-title tx-20 tx-bold" id="exampleModalLabel2">{{ addTitle($module) }}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -14,20 +14,20 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="" class="mb-1 tx-medium">Property Name</label>
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Name">
+                                <label for="" class="mb-1 tx-medium">{{ tn('Property Name') }}</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="{{ tn('Name') }}">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="" class="mb-1 tx-medium">PACI ID (optional)</label>
+                                <label for="" class="mb-1 tx-medium">{{ tn('PACI ID (optional)') }}</label>
                                 <input type="number" name="paci_id" id="paci_id" class="form-control"
-                                       placeholder="PACI ID (optional)">
+                                       placeholder="{{ tn('PACI ID (optional)') }}">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                            <label for="" class="mb-1 tx-medium">Property Type</label>
+                            <label for="" class="mb-1 tx-medium">{{ tn('Property Type') }}</label>
                             <select class="custom-select mb-20 mr-0 font-weight-500" name="type_id" id="type_id">
                                 @foreach($types as $type)
                                     <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -38,10 +38,10 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                            <label for="" class="mb-1 tx-medium">Employee in charge</label>
+                            <label for="" class="mb-1 tx-medium">{{ tn('Employee in charge') }}</label>
                             <select class="custom-select mb-20 mr-0 font-weight-500" name="assigned_to"
                                     id="assigned_to">
-                                <option value="">Employee </option>
+                                <option value="">{{ tn('Employee') }}</option>
                                 @foreach($employees as $employee)
                                     <option value="{{ $employee->id }}">
                                         {{ $employee->name }}
@@ -53,14 +53,14 @@
 
                         <div class="col-12">
                             <div class="form-group">
-                            <label for="" class="mb-1 tx-medium">Country</label>
+                            <label for="" class="mb-1 tx-medium">{{ tn('Country') }}</label>
                             <select class="custom-select mb-20 mr-0 font-weight-500" name="country"
                                     id="country">
-                                <option value="">Select Country</option>
+                                <option value="">{{ tn('Select Country') }}</option>
                                 @foreach($countries as $country)
                                     <option {{ $country->country_code == 'KW' ? 'selected' : '' }}
                                             value="{{ $country->country_code }}">
-                                        {{ $country->country_name }}
+                                        {{ tn($country->country_name) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -69,9 +69,9 @@
 
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="" class="mb-1 tx-medium">Address</label>
+                                <label for="" class="mb-1 tx-medium">{{ tn('Address') }}</label>
                                 <input type="text" name="address" id="address" class="form-control"
-                                       placeholder="Address">
+                                       placeholder="{{ tn('Address') }}">
 
                             </div>
                             <input type="hidden" name="longitude" id="longitude" value=""/>
@@ -88,10 +88,10 @@
                         <div class="btn_loader">
                             <div class="loader"></div>
                         </div>
-                        <button class="btn btn-primary download-btn" type="submit">Submit</button>
+                        <button class="btn btn-primary download-btn" type="submit">{{ tn('Submit') }}</button>
                     </div>
                    {{-- <div class="text-right submitBtn mt-3">
-                        <button class="btn btn-primary download-btn" type="submit">Submit</button>
+                        <button class="btn btn-primary download-btn" type="submit">{{ tn('Submit') }}</button>
                     </div>--}}
                 </form>
             </div>
