@@ -100,7 +100,7 @@
                 return $(
                     "<div class='d-flex align-items-center mt-3 flex-wrap'><div class='mr-3 mb-2'><label>{{ tn('Percentage') }}</label><input class='form-control' oninput='percentageBarometer($(this).val())' placeholder='{{ tn('Enter Percentage') }}' type=\"number\" min=\"0\" max=\"100\" step=\"" +
                     options +
-                    "\"/></div><div class='mr-3 mb-2'><label>{{ tn('Property Value') }}</label><input class='form-control' oninput='propertyValueBarometer($(this).val())' placeholder='{{ tn('Property Value') }}' type=\"number\" min=\"0\"/></div><div class='mr-3 mb-2'><label>{{ tn('This Month') }}</label><p class='font-weight-bold pt-1 m-0' id='monthlyIncomeBarometer'>{{ isset($widget->graph_data->monthly_income) ? number_format((float) $widget->graph_data->monthly_income, 2, '.', '') : '0.00' }}</p></div><div class='mr-3 mb-2'><label>{{ tn('Monthly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='monthlyTargetBarometer'>-</p></div><div class='mb-2'><label>{{ tn('Yearly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='yearlyTargetBarometer'>-</p></div></div>"
+                    "\"/></div><div class='mr-3 mb-2'><label>{{ tn('Property Value') }}</label><input class='form-control' oninput='propertyValueBarometer($(this).val())' placeholder='{{ tn('Property Value') }}' type=\"number\" min=\"0\"/></div><div class='mr-3 mb-2'><label>{{ tn('This Month') }}</label><p class='font-weight-bold pt-1 m-0' id='monthlyIncomeBarometer'>{{ isset($widget->graph_data->monthly_income) ? number_format((float) $widget->graph_data->monthly_income, 2, '.', '') : '0.00' }}</p></div><div class='mr-3 mb-2'><label>{{ tn('Monthly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='monthlyTargetBarometer'>-</p></div><div class='mr-3 mb-2'><label id='monthlyVarianceLabelBarometer'>{{ tn('Deficit') }}</label><p class='font-weight-bold pt-1 m-0' id='monthlyVarianceBarometer'>-</p></div><div class='mb-2'><label>{{ tn('Yearly Target') }}</label><p class='font-weight-bold pt-1 m-0' id='yearlyTargetBarometer'>-</p></div></div>"
                     );
             }
         @endif
@@ -248,21 +248,36 @@
                 let monthly_target{{ $widget->id }} = parseFloat(current_monthly_target{{ $widget->id }}) || 0;
 
                 let degs{{ $widget->id }} = 160;
+                let variance_label{{ $widget->id }} = '{{ tn('Deficit') }}';
+                let variance_value{{ $widget->id }} = '-';
+                let variance_color{{ $widget->id }} = '#eb323c';
 
                 if (monthly_target{{ $widget->id }} > 0) {
-                    let ratio{{ $widget->id }} = monthly_income{{ $widget->id }} / monthly_target{{ $widget->id }};
+                    let difference{{ $widget->id }} = monthly_income{{ $widget->id }} - monthly_target{{ $widget->id }};
 
-                    if (ratio{{ $widget->id }} >= 1.1) {
+                    if (difference{{ $widget->id }} > 0) {
                         degs{{ $widget->id }} = 25;
-                    } else if (ratio{{ $widget->id }} >= 1) {
-                        degs{{ $widget->id }} = 90;
-                    } else {
+                        variance_label{{ $widget->id }} = '{{ tn('Surplus') }}';
+                        variance_value{{ $widget->id }} = difference{{ $widget->id }}.toFixed(2);
+                        variance_color{{ $widget->id }} = '#02c990';
+                    } else if (difference{{ $widget->id }} < 0) {
                         degs{{ $widget->id }} = 160;
+                        variance_label{{ $widget->id }} = '{{ tn('Deficit') }}';
+                        variance_value{{ $widget->id }} = Math.abs(difference{{ $widget->id }}).toFixed(2);
+                        variance_color{{ $widget->id }} = '#eb323c';
+                    } else {
+                        degs{{ $widget->id }} = 90;
+                        variance_label{{ $widget->id }} = '{{ tn('On Target') }}';
+                        variance_value{{ $widget->id }} = '0.00';
+                        variance_color{{ $widget->id }} = '#f5bd56';
                     }
                 }
 
                 $('#monthlyTargetBarometer').html(current_monthly_target{{ $widget->id }});
                 $('#yearlyTargetBarometer').html(current_yearly_target{{ $widget->id }});
+                $('#monthlyVarianceLabelBarometer').html(variance_label{{ $widget->id }});
+                $('#monthlyVarianceBarometer').html(variance_value{{ $widget->id }}).css('color', variance_color{{ $widget->id }});
+                $('#monthlyVarianceLabelBarometer').css('color', variance_color{{ $widget->id }});
 
                 const $arrow{{ $widget->id }} = baro{{ $widget->id }}.$element.find('.arrow');
                 // For webkit browsers: e.g. Chrome
