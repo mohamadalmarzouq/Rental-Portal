@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/barometer.css') }}">
 @endpush
 <div class="col-md-6 d-flex flex-column mg-b-50">
-    <h3 class="mg-b-20  tx-24 tx-bold">{{ $widget->title }}</h3>
+    <h3 class="mg-b-20  tx-24 tx-bold">{{ tn($widget->title) }}</h3>
     <div class="card card-body">
 
         @isset($show_in_dashboard)

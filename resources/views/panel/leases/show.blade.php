@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="totalPropertiesWrap mg-b-20">
-                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">Total Leases</h6>
+                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">{{ t('page.total_leases') }}</h6>
                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                         <h3 class="tx-bold tx-roboto tx-color-navy mg-b-0 mg-r-5 lh-1">{{ $total_leases }}</h3>
                     </div>
@@ -14,7 +14,7 @@
 
             <div class="col-md-4">
                 <div class="totalPropertiesWrap mg-b-20">
-                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">Pending Leases</h6>
+                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">{{ t('page.pending_leases') }}</h6>
                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                         <h3 class="tx-bold tx-roboto tx-color-navy mg-b-0 mg-r-5 lh-1"> {{ $pending_leases }}</h3>
                     </div>
@@ -23,7 +23,7 @@
 
             <div class="col-md-4">
                 <div class="totalPropertiesWrap mg-b-20">
-                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">Active Leases</h6>
+                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">{{ t('page.active_leases') }}</h6>
                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                         <h3 class="tx-bold tx-roboto tx-color-navy mg-b-0 mg-r-5 lh-1"> {{ $approved_leases }}</h3>
                     </div>
@@ -37,13 +37,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="d-flex align-items-center justify-content-between mg-b-20">
-                    <h3 class="m-0 tx-27 tx-bold">{{ setText($module) }} Management</h3>
+                    <h3 class="m-0 tx-27 tx-bold">{{ t('page.leases_management') }}</h3>
                     <div>
-                        <a href="{{ route($module.'.export') }}" type="button" class="btn btn-primary download-btn mr-2">Download</a>
+                        <a href="{{ route($module.'.export') }}" type="button" class="btn btn-primary download-btn mr-2">{{ t('common.download') }}</a>
                         @if(hasRole($module , 'add'))
                             <a href="#addModal" data-toggle="modal">
-                                <button type="button" class="btn btn-success addNewBtn">Add
-                                    New {{ setText($module,true) }}</button>
+                                <button type="button" class="btn btn-success addNewBtn">{{ t('common.add_new') }} {{ setText($module,true) }}</button>
                             </a>
                         @endif
                     </div>
@@ -58,12 +57,12 @@
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                         </button>
-                        <input type="search" id="search" class="form-control border-0" placeholder="Search">
+                        <input type="search" id="search" class="form-control border-0" placeholder="{{ t('common.search') }}">
                     </div>
                     <form method="GET" action="{{ route($module.'.search') }}">
                         <div class="d-flex flex-row cusSelectWrp">
                             <select data-placeholder="Lease Type" class="cusSelect custom-select font-weight-500 mr-3 w-auto" name="type" id="type">
-                                <option value="">Lease Type</option>
+                                <option value="">{{ tn('Lease Type') }}</option>
                                 @foreach($types as $type)
                                     <option
                                         {{ isset($search_lease['type'])  ? checkSelectValue($search_lease['type'], $type->id) : '' }}
@@ -74,7 +73,7 @@
                             </select>
                             <select data-placeholder="All Status" class="cusSelect custom-select font-weight-500 mr-3" name="status"
                                     id="status">
-                                <option value="">Status</option>
+                                <option value="">{{ t('common.status') }}</option>
                                 @foreach($statuses as $status)
                                     <option
                                         {{ isset($search_lease['status'])  ? checkSelectValue($search_lease['status'], $status->id) : '' }}
@@ -86,7 +85,7 @@
 
                             <select data-placeholder="Property" class="cusSelect custom-select font-weight-500 mr-3" name="property"
                                     id="property">
-                                <option value="">Property</option>
+                                <option value="">{{ t('common.property') }}</option>
                                 @foreach($properties as $property)
                                     <option
                                         {{ isset($search_lease['property'])  ? checkSelectValue($search_lease['property'], $property->id) : '' }}
@@ -95,8 +94,8 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <button type="submit" class="btn btn-primary download-btn mr-2">Search</button>
-                            <a class="btn btn-primary download-btn" href="{{ route($module.'.show') }}">Clear</a>
+                            <button type="submit" class="btn btn-primary download-btn mr-2">{{ t('common.search') }}</button>
+                            <a class="btn btn-primary download-btn" href="{{ route($module.'.show') }}">{{ t('common.clear') }}</a>
                         </div>
                     </form>
                 </div>
@@ -111,7 +110,7 @@
         <div class="row">
             <div class="col-12">
                     <div class="d-flex align-items-center justify-content-between mg-b-20">
-                        <h3 class="m-0 tx-27 tx-bold">OverDue Payments</h3>
+                        <h3 class="m-0 tx-27 tx-bold">{{ t('page.overdue_payments') }}</h3>
                     </div>
 
                     @include('panel.includes.datatable',

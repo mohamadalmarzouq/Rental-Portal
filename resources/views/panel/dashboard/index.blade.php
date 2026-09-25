@@ -46,7 +46,7 @@
                     <form id="property-form" class="cusSelectWrp" method="get">
                         <select class="cusSelect custom-select font-weight-500" name="property"
                             onchange="changePropertyForReports(event,$(this).val())">
-                            <option value="">All Properties</option>
+                            <option value="">{{ t('common.all_properties') }}</option>
                             @foreach ($properties as $property)
                                 <option {{ $property_id == $property->id ? 'selected' : '' }} value="{{ $property->id }}">
                                     {{ $property->name }}

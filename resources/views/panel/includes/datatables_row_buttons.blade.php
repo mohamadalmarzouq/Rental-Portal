@@ -11,14 +11,14 @@
                 <a href="{{ route($buttons['view']['route'] , ['id' => $row->id]) }}" class="dropdown-item"
                    title="View">
                     <img class="view_ic" src="{{ asset('assets/img/view_ic.svg') }}"> <span
-                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">View</span>
+                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.view') }}</span>
                 </a>
             @else
                 <a href="#viewModal" data-toggle="modal"
                    onclick="view({{$row->id}},'{{ $module }}','{{ setText($module,true) }}')" class="dropdown-item"
                    title="View">
                     <img class="view_ic" src="{{ asset('assets/img/view_ic.svg') }}"> <span
-                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">View</span>
+                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.view') }}</span>
                 </a>
             @endif
         @endif
@@ -26,7 +26,7 @@
         @if(in_array('edit',$actions) && hasRole($module , 'edit'))
             <a href="{{ route($buttons['edit']['route'] , ['id' => $row->id]) }}" class="dropdown-item" title="Edit">
                 <img class="edit_ic" src="{{ asset('assets/img/edit_ic.svg') }}"> <span
-                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Edit</span>
+                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.edit') }}</span>
             </a>
         @endif
 
@@ -34,7 +34,7 @@
             <a href="javascript:" onclick="deleteRow({{$row->id}},'{{ $module }}' , $(this))" class="dropdown-item"
                title="Delete">
                 <img class="delete_ic" src="{{ asset('assets/img/delete_ic.svg') }}"> <span
-                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Delete</span>
+                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.delete') }}</span>
             </a>
         @endif
 
@@ -42,7 +42,7 @@
             <a href="javascript:;" onclick="printInvoice('{{ $row->id }}');" class="dropdown-item"
                title="Print Invoice">
                 <img class="delete_ic" src="{{ asset('assets/img/printInvoice_ic.svg') }}"> <span
-                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Print Invoice</span>
+                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.print_invoice') }}</span>
             </a>
         @endif
 
@@ -50,7 +50,7 @@
             <a href="{{ route('invoices.search',['lease_id' => $row->id]) }}" class="dropdown-item"
                title="View Transactions Log">
                 <img class="delete_ic" src="{{ asset('assets/img/viewTransactionLog_ic.svg') }}"> <span
-                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">View Transactions Log</span>
+                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.view_transactions') }}</span>
             </a>
         @endif
 
@@ -65,7 +65,7 @@
             <a href="{{ route('leases.search',['tenant_id' => $row->id]) }}" class="dropdown-item"
                title="Lease Details">
                 <img class="delete_ic" src="{{ asset('assets/img/leaseDetails_ic.svg') }}"> <span
-                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Lease Details</span>
+                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.lease_details') }}</span>
             </a>
         @endif
 
@@ -73,7 +73,7 @@
             <a href="{{ route('invoices.search',['tenant_id' => $row->id]) }}" class="dropdown-item"
                title="Payment History">
                 <img class="delete_ic" src="{{ asset('assets/img/paymentHistory_ic.svg') }}"> <span
-                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Payment History</span>
+                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.payment_history') }}</span>
             </a>
         @endif
 
@@ -82,7 +82,7 @@
             <a href="javascript:;" onclick="changeLeaseStatus('{{ $row->id }}','approve')" class="dropdown-item"
                title="Approve Lease">
                 <img class="delete_ic" src="{{ asset('assets/img/paymentHistory_ic.svg') }}"> <span
-                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Approve Lease</span>
+                    class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.approve_lease') }}</span>
             </a>
             @endif
         @endif
@@ -110,7 +110,7 @@
                 <a href="javascript:;" onclick="changeLeaseStatus('{{ $row->id }}','approve')" class="dropdown-item mr-2"
                    title="Approve Tenant">
                     <i class="fa fa-users"></i>
-                    <span class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Approve Tenant</span>
+                    <span class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.approve_tenant') }}</span>
 
                 </a>
             @endif
@@ -120,7 +120,7 @@
             <a href="javascript:;" onclick="addComment('{{ $row->id }}')" class="dropdown-item"
                title="Add Comment">
                  <span
-                     class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Add Comment</span>
+                     class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.add_comment') }}</span>
             </a>
         @endif
 
@@ -129,7 +129,7 @@
                 <a href="javascript:;" onclick="changeLeaseStatus('{{ $row->id }}','end')" class="dropdown-item"
                    title="End Lease">
                     <img class="delete_ic" src="{{ asset('assets/img/endLease_ic.svg') }}"> <span
-                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">End Lease</span>
+                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.end_lease') }}</span>
                 </a>
             @endif
         @endif
@@ -139,7 +139,7 @@
                 <a href="{{ route($module.'.add_invoice',['id' => $row->id])}}" class="dropdown-item"
                    title="Add Future Invoice">
                     <img class="delete_ic" src="{{ asset('assets/img/addFutureInvoice_ic.svg') }}"> <span
-                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Add Future Invoice</span>
+                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.add_future_invoice') }}</span>
                 </a>
             @endif
         @endif
@@ -160,7 +160,7 @@
                    onclick="changeInvoiceStatus('{{ $row->id }}','approve','{{ $row->type->slug == 'revenue' ? 'invoices' : 'expense_invoice' }}')"
                    class="dropdown-item" title="Approve Invoice">
                     <img class="delete_ic" src="{{ asset('assets/img/approveInvoice_ic.svg') }}"> <span
-                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Approve Invoice</span>
+                        class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.approve_invoice') }}</span>
                 </a>
             @endif
         @endif
@@ -184,7 +184,7 @@
             class="dropdown-item"
             title="End Lease">
              <i class="fa fa-mail-bulk fs-20"></i> <span
-                 class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">Send Invoice</span>
+                 class="tx-14 tx-medium mg-l-10 lh--9 flex-fill">{{ t('action.send_invoice') }}</span>
             </a>
             @else
               <p style="font-size:12px;color:red">Invoice is not created for property</p>

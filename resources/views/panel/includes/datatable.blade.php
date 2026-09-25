@@ -8,7 +8,7 @@
     <thead>
     <tr>
         @foreach(json_decode($data_table_columns) as $column)
-            <th>{{ ucfirst(str_replace('_',' ',$column->name)) }}</th>
+            <th>{{ tn(isset($column->title) ? $column->title : ucfirst(str_replace('_',' ',$column->name))) }}</th>
         @endforeach
     </tr>
     </thead>
@@ -46,6 +46,16 @@
                 paging : {{ isset($paging) ? $paging : 'true' }},
                 ordering : {!! isset($ordering) ? $ordering : 'false' !!},
                 columns: {!! $data_table_columns !!},
+                language: {
+                    paginate: {
+                        previous: @json(t('common.previous')),
+                        next: @json(t('common.next'))
+                    },
+                    zeroRecords: @json(t('common.no_data')),
+                    info: @json(t('common.showing_entries')),
+                    infoEmpty: @json(t('common.no_data')),
+                    search: ''
+                },
                 "fnInitComplete": function (oSettings, json) {
                     if (typeof afterDatatable == 'function') {
                         afterDatatable();

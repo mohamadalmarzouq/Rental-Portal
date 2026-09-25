@@ -7,11 +7,11 @@
                 <ul class="nav nav-pills mg-b-85 invoice_nav" id="pills-tab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="pills-revenue-tab" data-toggle="pill" href="#pills-revenue"
-                            role="tab" aria-controls="pills-revenue" aria-selected="true">Revenue</a>
+                            role="tab" aria-controls="pills-revenue" aria-selected="true">{{ tn('Revenue') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="pills-expenses-tab" data-toggle="pill" href="#pills-expenses" role="tab"
-                            aria-controls="pills-expenses" aria-selected="false">Expenses</a>
+                            aria-controls="pills-expenses" aria-selected="false">{{ t('page.expenses') }}</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="totalPropertiesWrap mg-b-20">
-                                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">Total Invoices</h6>
+                                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">{{ t('page.total_invoices') }}</h6>
                                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                                         <h3 class="tx-bold tx-roboto tx-color-navy mg-b-0 mg-r-5 lh-1">
                                             {{ $widgets['revenues']['total'] }}</h3>
@@ -32,7 +32,7 @@
                             <div class="mg-b-50 d-flex col-md-6">
                                 <div class="card card-body border-primary">
                                     <h6 class="tx-uppercase tx-16 tx-spacing-1 tx-color-02 tx-semibold mb-2">
-                                        Approved</h6>
+                                        {{ t('page.approved') }}</h6>
                                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                                         <h3 class="tx-bold tx-roboto mg-b-0 tx-30">{{ $widgets['revenues']['approved'] }}
                                         </h3>
@@ -42,7 +42,7 @@
                             <div class="mg-b-50 d-flex col-md-6">
                                 <div class="card card-body border-primary">
                                     <h6 class="tx-uppercase tx-16 tx-spacing-1 tx-color-02 tx-semibold mb-2">
-                                        Pending</h6>
+                                        {{ t('page.pending') }}</h6>
                                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                                         <h3 class="tx-bold tx-roboto mg-b-0 tx-30">{{ $widgets['revenues']['pending'] }}
                                         </h3>
@@ -54,14 +54,13 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="d-flex align-items-center justify-content-between mg-b-20">
-                                    <h3 class="m-0 tx-27 tx-bold">Revenues</h3>
+                                    <h3 class="m-0 tx-27 tx-bold">{{ t('page.revenues') }}</h3>
                                     <div>
                                         <a href="{{ route($module . '.revenue.export') }}" type="button"
-                                            class="btn btn-primary download-btn mr-2">Download</a>
+                                            class="btn btn-primary download-btn mr-2">{{ t('common.download') }}</a>
                                         @if (hasRole($module, 'add'))
                                             <a href="#addModal" data-toggle="modal">
-                                                <button type="button" class="btn btn-success addNewBtn">Add
-                                                    New {{ setText($module, true) }}</button>
+                                                <button type="button" class="btn btn-success addNewBtn">{{ t('common.add_new') }} {{ setText($module, true) }}</button>
                                             </a>
                                         @endif
                                     </div>
@@ -78,7 +77,7 @@
                                             </svg>
                                         </button>
                                         <input type="search" id="search-{{ $module }}" class="form-control border-0"
-                                            placeholder="Search">
+                                            placeholder="{{ t('common.search') }}">
                                         @push('custom-scripts')
                                             <script type="text/javascript">
                                                 $('#search-{{ $module }}').keyup(function() {
@@ -157,12 +156,12 @@
 
                                                     <div class="">
                                                         <button type="submit" class="btn btn-primary download-btn mr-2">
-                                                            Search
+                                                            {{ t('common.search') }}
                                                         </button>
 
                                                     </div>
                                                     <a class="btn btn-primary download-btn"
-                                                        href="{{ route($module . '.show') }}">Clear</a>
+                                                        href="{{ route($module . '.show') }}">{{ t('common.clear') }}</a>
                                                 </div>
 
 
@@ -191,7 +190,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="totalPropertiesWrap mg-b-20">
-                                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">Total Invoices</h6>
+                                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">{{ t('page.total_invoices') }}</h6>
                                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                                         <h3 class="tx-bold tx-roboto tx-color-navy mg-b-0 mg-r-5 lh-1">
                                             {{ $widgets['expenses']['total'] }}</h3>
@@ -203,7 +202,7 @@
                             <div class="mg-b-50 d-flex col-md-6">
                                 <div class="card card-body border-primary">
                                     <h6 class="tx-uppercase tx-16 tx-spacing-1 tx-color-02 tx-semibold mb-2">
-                                        Approved</h6>
+                                        {{ t('page.approved') }}</h6>
                                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                                         <h3 class="tx-bold tx-roboto mg-b-0 tx-30">{{ $widgets['expenses']['approved'] }}
                                         </h3>
@@ -213,7 +212,7 @@
                             <div class="mg-b-50 d-flex col-md-6">
                                 <div class="card card-body border-primary">
                                     <h6 class="tx-uppercase tx-16 tx-spacing-1 tx-color-02 tx-semibold mb-2">
-                                        Pending</h6>
+                                        {{ t('page.pending') }}</h6>
                                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                                         <h3 class="tx-bold tx-roboto mg-b-0 tx-30">{{ $widgets['expenses']['pending'] }}
                                         </h3>
@@ -224,14 +223,14 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="d-flex align-items-center justify-content-between mg-b-20">
-                                    <h3 class="m-0 tx-27 tx-bold">Expenses</h3>
+                                    <h3 class="m-0 tx-27 tx-bold">{{ t('page.expenses') }}</h3>
                                     <div>
                                         <a href="{{ route($module . '.expense.export') }}" type="button"
-                                            class="btn btn-primary download-btn mr-2">Download</a>
+                                            class="btn btn-primary download-btn mr-2">{{ t('common.download') }}</a>
 
                                         <a href="#addnewexpenses_modal" data-toggle="modal">
                                             <button type="button" class="btn btn-success addNewBtn">
-                                                Add New Expenses</button>
+                                                {{ t('page.add_new_expenses') }}</button>
                                         </a>
                                     </div>
                                 </div>
@@ -248,7 +247,7 @@
                                             </svg>
                                         </button>
                                         <input type="search" id="search-expense_invoice" class="form-control border-0"
-                                            placeholder="Search">
+                                            placeholder="{{ t('common.search') }}">
                                         @push('custom-scripts')
                                             <script type="text/javascript">
                                                 $('#search-expense_invoice').keyup(function() {
@@ -328,12 +327,12 @@
 
                                                     <div class="">
                                                         <button type="submit" class="btn btn-primary download-btn mr-2">
-                                                            Search
+                                                            {{ t('common.search') }}
                                                         </button>
 
                                                     </div>
                                                     <a class="btn btn-primary download-btn"
-                                                        href="{{ route($module . '.show') }}">Clear</a>
+                                                        href="{{ route($module . '.show') }}">{{ t('common.clear') }}</a>
                                                 </div>
 
 

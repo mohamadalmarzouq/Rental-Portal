@@ -5,7 +5,7 @@
         </div>
         <div>
             <h5 class="mg-b-2 tx-spacing--1 mt-3">{{ Auth()->user()->name }}</h5>
-            <p class="tx-color-03 mg-b-25">{{ Auth()->user()->role->name }}</p>
+            <p class="tx-color-03 mg-b-25">{{ tn(Auth()->user()->role->name) }}</p>
         </div>
     </div>
     <div class="social_links">
@@ -19,7 +19,7 @@
                                href="{{ $module['route_name'] == '#' ? '#' : route($module['route_name']) }}"
                                data-toggle="{{ !empty($module['children']) ? 'dropdown' : '' }}">
                                 <i class="{{ $module['icon'] }}"></i> &nbsp;
-                                {{ $module['title'] }}
+                                {{ t('nav.' . $module['slug'], $module['title']) }}
                             </a>
                             @if(!empty($module['children']))
                                 <div
@@ -27,12 +27,12 @@
                                     @foreach($module['children'] as $children)
                                         @if(hasRole($children['slug'] , 'is_visible'))
                                             <a class="dropdown-item {{ $current_route_name == $children['route_name'] ? 'active' : '' }}"
-                                               href="{{ route($children['route_name']) }}">{{ $children['title'] }}</a>
+                                               href="{{ route($children['route_name']) }}">{{ t('nav.' . $children['slug'], $children['title']) }}</a>
                                         @endif
                                     @endforeach
                                     <a class="dropdown-item"
                                        href="#" onclick="event.preventDefault();
-                                   document.getElementById('logout-form').submit();">Sign Out</a>
+                                   document.getElementById('logout-form').submit();">{{ t('nav.sign_out') }}</a>
                                 </div>
                             @endif
                         </li>

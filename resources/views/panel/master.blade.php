@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ session('locale', 'en') }}" translate="no" class="notranslate">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" translate="no" class="notranslate {{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }}">
 
 @include('panel.includes.head')
 

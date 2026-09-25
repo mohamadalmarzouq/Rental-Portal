@@ -26,8 +26,9 @@ class LanguageController extends Controller
         $locale = $request->input('locale') === 'ar' ? 'ar' : 'en';
         $request->session()->put('locale', $locale);
         app()->setLocale($locale);
+        cookie()->queue('locale', $locale, 60 * 24 * 365);
 
-        flash('Language Changed','success');
+        flash(t('common.language_changed', 'Language Changed'), 'success');
 
         return back();
     }

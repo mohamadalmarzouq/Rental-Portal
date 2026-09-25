@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="totalPropertiesWrap mg-b-20">
-                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">Total Tenants</h6>
+                    <h6 class="tx-uppercase tx-15 tx-color-02 tx-semibold mb-2">{{ t('page.total_tenants') }}</h6>
                     <div class="d-flex d-lg-block d-xl-flex align-items-end mb-0">
                         <h3 class="tx-bold tx-roboto tx-color-navy mg-b-0 mg-r-5 lh-1">{{ $total_tenants }}</h3>
                     </div>
@@ -19,13 +19,12 @@
             <div class="col-12">
 
                 <div class="d-flex align-items-center justify-content-between mg-b-20">
-                    <h3 class="m-0 tx-27 tx-bold">{{ setText($module) }} Management</h3>
+                    <h3 class="m-0 tx-27 tx-bold">{{ setText($module) }} {{ t('common.management') }}</h3>
                     <div>
-                        <a href="{{ route($module.'.export') }}" type="button" class="btn btn-primary download-btn mr-2">Download</a>
+                        <a href="{{ route($module.'.export') }}" type="button" class="btn btn-primary download-btn mr-2">{{ t('common.download') }}</a>
                         @if(hasRole($module , 'add'))
                             <a href="#addModal" data-toggle="modal">
-                                <button type="button" class="btn btn-success addNewBtn">Add
-                                    New {{ setText($module,true) }}</button>
+                                <button type="button" class="btn btn-success addNewBtn">{{ t('common.add_new') }} {{ setText($module,true) }}</button>
                             </a>
                         @endif
                     </div>
@@ -41,7 +40,7 @@
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                         </button>
-                        <input type="search" id="search" class="form-control border-0" placeholder="Search">
+                        <input type="search" id="search" class="form-control border-0" placeholder="{{ t('common.search') }}">
                     </div>
                     <div class="d-flex flex-row cusSelectWrp" >
 

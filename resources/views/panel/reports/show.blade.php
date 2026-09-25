@@ -4,7 +4,7 @@
     <div class="primary-bg-color contents mg-y-60 mg-x-70 w-100">
         @include('auth.includes.flash_mesages')
 
-        <h4 class="tx-24 tx-bold m-0">Filter</h4>
+        <h4 class="tx-24 tx-bold m-0">{{ tn('Filter') }}</h4>
         <div class="row dashboard-top d-flex align-items-lg-end mg-b-30">
 
             @if (in_array(auth()->user()->role_id,

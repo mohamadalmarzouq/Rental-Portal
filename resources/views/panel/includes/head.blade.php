@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    @if (app()->getLocale() === 'ar')
+        <link rel="stylesheet" href="{{ asset('assets/css/rtl.css') }}">
+    @endif
     {{--<link href="{{ asset('assets/css/jquery.datetimepicker.css') }}" rel="stylesheet">--}}
 
 </head>

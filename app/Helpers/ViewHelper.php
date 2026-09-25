@@ -27,8 +27,41 @@ function hasRole($slug, $key)
     return Auth()->user()->hasPermission($slug, Auth()->user()->role_id, $key);
 }
 
+function t($key, $default = null)
+{
+    $line = __('ui.' . $key);
+    if ($line !== 'ui.' . $key) {
+        return $line;
+    }
+
+    return $default !== null ? $default : $key;
+}
+
+function tn($text)
+{
+    if ($text === null || $text === '') {
+        return $text;
+    }
+
+    $slug = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '_', $text), '_'));
+    foreach (['label.' . $slug, 'nav.' . $slug, 'common.' . $slug, 'status.' . $slug, 'page.' . $slug] as $key) {
+        $line = __('ui.' . $key);
+        if ($line !== 'ui.' . $key) {
+            return $line;
+        }
+    }
+
+    return $text;
+}
+
 function setText($string, $singular = false)
 {
+    $slug = strtolower(str_replace(' ', '_', $string));
+    $key = $singular ? 'module.' . $slug . '_one' : 'module.' . $slug;
+    $translated = t($key);
+    if ($translated !== $key) {
+        return $translated;
+    }
 
     $string = ucwords(str_replace("_", " ", $string));
 

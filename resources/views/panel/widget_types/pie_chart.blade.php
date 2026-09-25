@@ -4,7 +4,7 @@
 
 <div class="col-xl-4 col-lg-6 d-flex flex-column mg-b-50">
     <div class="d-flex align-items-center justify-content-between mg-b-20">
-        <h3 class="tx-24 tx-bold m-0">Vacancy Rate</h3>
+        <h3 class="tx-24 tx-bold m-0">{{ t('page.vacancy_rate') }}</h3>
         @isset($show_in_dashboard)
             <div class="col show_in_dashboard text-right">
                 <div class="custom-control custom-checkbox">
