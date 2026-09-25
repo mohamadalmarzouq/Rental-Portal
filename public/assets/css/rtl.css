@@ -18,7 +18,15 @@ html[dir="rtl"] .tx-spacing--1 {
     letter-spacing: 0 !important;
 }
 
-html[dir="rtl"] .navbar-header,
+html[dir="rtl"] .navbar-header .d-flex.w-100.pt-3 {
+    direction: ltr;
+    text-align: left;
+}
+
+html[dir="rtl"] .navbar-header .navbar-right {
+    margin-left: auto;
+}
+
 html[dir="rtl"] .navWrap,
 html[dir="rtl"] .navbar-menu,
 html[dir="rtl"] .cusSelectWrp,

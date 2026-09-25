@@ -63,7 +63,7 @@
 
                             <div class="col-sm-6 property">
                                 <div class="form-group" id="unit">
-                                    <label for="" class="mb-1 tx-medium">Unit</label>
+                                    <label for="" class="mb-1 tx-medium">{{ t('common.unit') }}</label>
                                     <select class="custom-select mr-0 font-weight-500 unit-id-1" name="extras[1][unit_id]"
                                         id="unit_id">
                                         <option value="">{{ tn('Select Unit') }}</option>
@@ -332,7 +332,7 @@
 
                             <div class="col-sm-6 property">
                                 <div class="form-group" id="unit">
-                                    <label for="" class="mb-1 tx-medium">Unit</label>
+                                    <label for="" class="mb-1 tx-medium">{{ t('common.unit') }}</label>
                                     <select class="custom-select mr-0 font-weight-500 unit-id-`+count+`" name="extras[`+count+`][unit_id]"
                                         id="unit_id">
                                         <option value="">{{ tn('Select Unit') }}</option>

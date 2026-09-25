@@ -44,7 +44,17 @@ function tn($text)
     }
 
     $slug = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '_', $text), '_'));
-    foreach (['label.' . $slug, 'nav.' . $slug, 'common.' . $slug, 'status.' . $slug, 'page.' . $slug, 'action.' . $slug] as $key) {
+    $hyphen = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '-', $text), '-'));
+    $keys = [
+        'label.' . $slug,
+        'nav.' . $slug,
+        'common.' . $slug,
+        'status.' . $slug,
+        'status.' . $hyphen,
+        'page.' . $slug,
+        'action.' . $slug,
+    ];
+    foreach ($keys as $key) {
         $line = __('ui.' . $key);
         if ($line !== 'ui.' . $key) {
             return $line;
