@@ -11,7 +11,7 @@
                     <input type="checkbox" class="custom-control-input" name="show{{ $widget->id }}"
                         id="show{{ $widget->id }}" data-id="{{ $widget->id }}"
                         {{ showInDashboard($widget->id) ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="show{{ $widget->id }}">Show in Dashboard</label>
+                    <label class="custom-control-label" for="show{{ $widget->id }}">{{ tn('Show in Dashboard') }}</label>
                 </div>
             </div>
         @endisset
@@ -66,7 +66,7 @@
                     <input type="checkbox" class="custom-control-input" name="show{{ $widget->id }}"
                            id="show{{ $widget->id }}"
                            data-id="{{ $widget->id }}" {{ showInDashboard($widget->id) ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="show{{ $widget->id }}">Show in Dashboard</label>
+                    <label class="custom-control-label" for="show{{ $widget->id }}">{{ tn('Show in Dashboard') }}</label>
                 </div>
             </div>
         @endisset
