@@ -34,6 +34,16 @@ html[dir="rtl"] .propertyManagementSearchWrap {
     direction: rtl;
 }
 
+html[dir="rtl"] .social_links .nav-classic .nav-link {
+    padding-left: 0;
+    padding-right: 28px;
+}
+
+html[dir="rtl"] .social_links .nav-classic .nav-link i {
+    left: auto;
+    right: 0;
+}
+
 html[dir="rtl"] .form-control,
 html[dir="rtl"] .custom-select,
 html[dir="rtl"] select {
